@@ -1,0 +1,29 @@
+{
+  "alert_needed": true,
+  "performances": [
+    {
+      "player": "Luka Doncic",
+      "team": "DAL",
+      "points": 73,
+      "game_id": "0022300634",
+      "rebounds": 10,
+      "assists": 7,
+      "minutes": "44:43"
+    },
+    {
+      "player": "Devin Booker",
+      "team": "PHX",
+      "points": 62,
+      "game_id": "0022300636",
+      "rebounds": 5,
+      "assists": 4,
+      "minutes": "38:18"
+    }
+  ],
+  "check_date": "2024-01-26",
+  "checked_at": "2026-01-23T00:32:16.624120",
+  "promo_window": {
+    "start": "9:00 AM PT",
+    "end": "11:00 AM PT"
+  }
+}

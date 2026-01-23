@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50-Point Alerts | DoorDash 50% OFF Notifications</title>
+    <meta name="description" content="Get notified when DoorDash's 50% off promo is live after an NBA player scores 50+ points.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="50-Point Alerts">
+    <meta property="og:description" content="Get notified when DoorDash's 50% off promo is live.">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .emoji {
+            font-size: 72px;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #1a1a2e;
+            margin-bottom: 12px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            font-size: 17px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #FF3008 0%, #FF6B47 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        form {
+            margin-top: 25px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 17px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        input[type="email"]:focus {
+            border-color: #FF3008;
+            box-shadow: 0 0 0 4px rgba(255, 48, 8, 0.1);
+        }
+
+        input[type="email"]::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 17px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF3008 0%, #FF6B47 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 48, 8, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .how-it-works {
+            text-align: left;
+            margin-top: 35px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 14px;
+        }
+
+        .how-it-works h3 {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .how-it-works ol {
+            color: #444;
+            padding-left: 22px;
+            line-height: 2;
+            font-size: 15px;
+        }
+
+        .how-it-works li::marker {
+            color: #FF3008;
+            font-weight: bold;
+        }
+
+        .info {
+            margin-top: 30px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .success-message {
+            display: none;
+            padding: 20px;
+            background: #d4edda;
+            border-radius: 12px;
+            color: #155724;
+            margin-top: 20px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .recent-games {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            text-align: left;
+        }
+
+        .recent-games h4 {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .game-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .game-item .points {
+            color: #FF3008;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .emoji {
+                font-size: 56px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🏀</div>
+        <h1>50-Point Alerts</h1>
+        <p class="subtitle">
+            Get notified when DoorDash's <span class="highlight">50% OFF</span>
+            promo is live after an NBA player drops 50+ points
+        </p>
+
+        <!-- IMPORTANT: Replace YOUR_AUDIENCE_ID with your actual Resend Audience ID -->
+        <form id="signup-form" action="https://app.resend.com/audiences/YOUR_AUDIENCE_ID/contacts" method="POST">
+            <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+            >
+            <button type="submit">Get Alerts 🔔</button>
+        </form>
+
+        <div id="success-message" class="success-message">
+            ✅ <strong>You're in!</strong> We'll email you at 9 AM PT when the deal is live.
+        </div>
+
+        <div class="how-it-works">
+            <h3>How it works</h3>
+            <ol>
+                <li>NBA player scores 50+ points</li>
+                <li>DoorDash runs 50% off promo (9-11 AM PT)</li>
+                <li>You get an email at 9 AM PT sharp</li>
+            </ol>
+        </div>
+
+        <div class="recent-games">
+            <h4>Recent 50+ Point Games</h4>
+            <div class="game-item">
+                <span>Jan 25, 2024 - Luka Doncic</span>
+                <span class="points">73 PTS</span>
+            </div>
+            <div class="game-item">
+                <span>Jan 22, 2024 - Devin Booker</span>
+                <span class="points">62 PTS</span>
+            </div>
+            <div class="game-item">
+                <span>Jan 8, 2024 - Giannis Antetokounmpo</span>
+                <span class="points">55 PTS</span>
+            </div>
+        </div>
+
+        <p class="info">
+            Free forever · Unsubscribe anytime · No spam
+        </p>
+    </div>
+
+    <script>
+        // Handle form submission
+        // Note: For Resend Audience, you may need to handle this via API
+        // This is a placeholder for client-side feedback
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            // If using Resend's hosted form, it will redirect
+            // If using API, prevent default and handle via fetch
+
+            // For now, show success message on submit
+            // You'll customize this based on your actual integration
+        });
+    </script>
+</body>
+</html>

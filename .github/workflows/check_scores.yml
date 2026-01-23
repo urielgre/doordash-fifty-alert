@@ -1,0 +1,57 @@
+name: Check for 50+ Point Games
+
+on:
+  schedule:
+    # 1:30 AM PT = 9:30 AM UTC (during standard time)
+    # 1:30 AM PT = 8:30 AM UTC (during daylight saving time)
+    # Using 9:30 AM UTC to be safe (catches late west coast games)
+    - cron: '30 9 * * *'
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date to check (YYYY-MM-DD), leave empty for yesterday'
+        required: false
+        type: string
+      test_mode:
+        description: 'Test with Luka 73-pt game (2024-01-25)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  check-scores:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check for 50+ point games
+        run: |
+          if [ "${{ inputs.test_mode }}" = "true" ]; then
+            python src/check_fifty.py --test
+          elif [ -n "${{ inputs.date }}" ]; then
+            python src/check_fifty.py --date "${{ inputs.date }}"
+          else
+            python src/check_fifty.py
+          fi
+
+      - name: Commit updated state file
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/alert_state.json
+          git diff --staged --quiet || git commit -m "Update alert state [skip ci]"
+          git push

@@ -1,0 +1,54 @@
+name: Send DoorDash Alert
+
+on:
+  schedule:
+    # 9:00 AM PT = 5:00 PM UTC (during standard time)
+    # 9:00 AM PT = 4:00 PM UTC (during daylight saving time)
+    # Using 5:00 PM UTC to align with standard time
+    - cron: '0 17 * * *'
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      test_email:
+        description: 'Test email address (sends test email regardless of state)'
+        required: false
+        type: string
+
+jobs:
+  send-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Send alert if needed
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+        run: |
+          if [ -n "${{ inputs.test_email }}" ]; then
+            python src/send_email.py --test "${{ inputs.test_email }}"
+          else
+            python src/send_email.py
+          fi
+
+      - name: Commit cleared state (if alert was sent)
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/alert_state.json
+          git diff --staged --quiet || git commit -m "Clear alert state after sending [skip ci]"
+          git push || true
