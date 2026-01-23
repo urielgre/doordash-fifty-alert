@@ -397,17 +397,21 @@
             promo is live after an NBA player drops 50+ points
         </p>
 
-        <!-- IMPORTANT: Replace YOUR_AUDIENCE_ID with your actual Resend Audience ID -->
-        <form id="signup-form" action="https://app.resend.com/audiences/YOUR_AUDIENCE_ID/contacts" method="POST">
+        <!-- Signup Form - Handled via JavaScript -->
+        <form id="signup-form">
             <input
                 type="email"
                 name="email"
+                id="email-input"
                 placeholder="DROP YOUR EMAIL HERE..."
                 required
                 autocomplete="email"
             >
-            <button type="submit">JOIN THE SQUAD</button>
+            <button type="submit" id="submit-btn">JOIN THE SQUAD</button>
         </form>
+        <div id="success-msg" style="display:none; margin-top: 15px; padding: 15px; background: rgba(0, 206, 209, 0.2); border-left: 4px solid #00CED1; color: #00CED1;">
+            YOU'RE IN! We'll alert you at 9 AM PT when the deal drops.
+        </div>
 
         <div class="how-it-works">
             <h3>THE GAME PLAN</h3>
@@ -454,6 +458,52 @@
             star.style.color = ['#FFD700', '#00CED1', '#FF1493', '#FF6B35'][Math.floor(Math.random() * 4)];
             starsContainer.appendChild(star);
         }
+
+        // Form submission handler
+        // UPDATE THIS URL after deploying the Cloudflare Worker
+        const WORKER_URL = 'YOUR_WORKER_URL_HERE';
+
+        const form = document.getElementById('signup-form');
+        const emailInput = document.getElementById('email-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const successMsg = document.getElementById('success-msg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            if (!email) return;
+
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'JOINING...';
+
+            try {
+                const response = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.json();
+
+                if (response.ok || result.success) {
+                    // Success
+                    form.style.display = 'none';
+                    successMsg.style.display = 'block';
+                } else {
+                    // Error
+                    alert(result.error || 'Something went wrong. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'JOIN THE SQUAD';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert('Connection error. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'JOIN THE SQUAD';
+            }
+        });
     </script>
 </body>
 </html>

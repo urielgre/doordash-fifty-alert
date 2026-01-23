@@ -1,0 +1,8 @@
+name = "fifty-point-signup"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Environment variables - set these in Cloudflare dashboard
+# or use `wrangler secret put RESEND_API_KEY`
+# RESEND_API_KEY = "re_xxx"
+# RESEND_AUDIENCE_ID = "xxx"
