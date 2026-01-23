@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>50-Point Alerts | DoorDash 50% OFF Notifications</title>
+    <title>50-POINT ALERTS | DoorDash 50% OFF</title>
     <meta name="description" content="Get notified when DoorDash's 50% off promo is live after an NBA player scores 50+ points.">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="50-Point Alerts">
-    <meta property="og:description" content="Get notified when DoorDash's 50% off promo is live.">
-    <meta property="og:type" content="website">
+    <!-- Google Fonts - 90s Bold Style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
@@ -21,58 +21,193 @@
             padding: 0;
         }
 
+        :root {
+            --purple: #6B2D9B;
+            --teal: #00CED1;
+            --orange: #FF6B35;
+            --hot-pink: #FF1493;
+            --yellow: #FFD700;
+            --dark-purple: #2D1B4E;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Russo One', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            background: var(--dark-purple);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated 90s Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(135deg, var(--purple) 0%, var(--dark-purple) 50%, #1a0a2e 100%);
+            z-index: -2;
+        }
+
+        /* Geometric Pattern Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(0, 206, 209, 0.03) 35px,
+                    rgba(0, 206, 209, 0.03) 70px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(255, 107, 53, 0.03) 35px,
+                    rgba(255, 107, 53, 0.03) 70px
+                );
+            z-index: -1;
+            animation: patternMove 20s linear infinite;
+        }
+
+        @keyframes patternMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(70px, 70px); }
+        }
+
+        /* Floating Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 20px;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
+            background: linear-gradient(180deg, #1a0a2e 0%, var(--dark-purple) 100%);
+            border-radius: 0;
             padding: 50px 40px;
-            max-width: 460px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            position: relative;
+            border: 4px solid var(--teal);
+            box-shadow:
+                8px 8px 0 var(--orange),
+                16px 16px 0 var(--hot-pink),
+                0 0 60px rgba(0, 206, 209, 0.3);
         }
 
-        .emoji {
-            font-size: 72px;
-            margin-bottom: 20px;
-            animation: bounce 2s ease-in-out infinite;
+        /* Corner Triangles */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 0;
+            height: 0;
+            border-left: 40px solid var(--yellow);
+            border-bottom: 40px solid transparent;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 0;
+            height: 0;
+            border-right: 40px solid var(--hot-pink);
+            border-top: 40px solid transparent;
+        }
+
+        .basketball {
+            font-size: 80px;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: spin-bounce 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.8));
+        }
+
+        @keyframes spin-bounce {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(0) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(270deg);
+            }
         }
 
         h1 {
-            color: #1a1a2e;
-            margin-bottom: 12px;
-            font-size: 32px;
-            font-weight: 700;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+            background: linear-gradient(180deg, var(--yellow) 0%, var(--orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(3px 3px 0 var(--hot-pink));
+        }
+
+        .tagline {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: var(--teal);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 35px;
-            line-height: 1.6;
-            font-size: 17px;
+            color: #c9b8e0;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 15px;
+            font-family: 'Russo One', sans-serif;
         }
 
         .highlight {
-            background: linear-gradient(135deg, #FF3008 0%, #FF6B47 100%);
+            background: linear-gradient(90deg, var(--orange) 0%, var(--hot-pink) 100%);
             color: white;
-            padding: 3px 10px;
-            border-radius: 6px;
+            padding: 4px 12px;
             font-weight: 700;
             display: inline-block;
+            transform: skewX(-5deg);
+            box-shadow: 3px 3px 0 var(--yellow);
         }
 
         form {
@@ -82,147 +217,181 @@
         input[type="email"] {
             width: 100%;
             padding: 18px 20px;
-            font-size: 17px;
-            border: 2px solid #e8e8e8;
-            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Russo One', sans-serif;
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--teal);
+            color: white;
             margin-bottom: 14px;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             outline: none;
         }
 
         input[type="email"]:focus {
-            border-color: #FF3008;
-            box-shadow: 0 0 0 4px rgba(255, 48, 8, 0.1);
+            border-color: var(--yellow);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         input[type="email"]::placeholder {
-            color: #aaa;
+            color: #8a7aa0;
         }
 
         button {
             width: 100%;
-            padding: 18px 20px;
-            font-size: 17px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #FF3008 0%, #FF6B47 100%);
+            padding: 20px;
+            font-size: 18px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--orange) 0%, var(--hot-pink) 100%);
             color: white;
             border: none;
-            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        button:hover::before {
+            left: 100%;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 48, 8, 0.4);
+            transform: translateY(-3px);
+            box-shadow:
+                0 6px 0 var(--purple),
+                0 10px 30px rgba(255, 20, 147, 0.5);
         }
 
         button:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .how-it-works {
             text-align: left;
             margin-top: 35px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 14px;
+            padding: 20px;
+            background: rgba(0, 206, 209, 0.1);
+            border-left: 4px solid var(--teal);
         }
 
         .how-it-works h3 {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--teal);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
         }
 
         .how-it-works ol {
-            color: #444;
-            padding-left: 22px;
-            line-height: 2;
-            font-size: 15px;
+            color: #c9b8e0;
+            padding-left: 25px;
+            line-height: 2.2;
+            font-size: 14px;
         }
 
         .how-it-works li::marker {
-            color: #FF3008;
+            color: var(--yellow);
             font-weight: bold;
-        }
-
-        .info {
-            margin-top: 30px;
-            color: #999;
-            font-size: 13px;
-        }
-
-        .success-message {
-            display: none;
-            padding: 20px;
-            background: #d4edda;
-            border-radius: 12px;
-            color: #155724;
-            margin-top: 20px;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .recent-games {
             margin-top: 25px;
             padding-top: 25px;
-            border-top: 1px solid #eee;
+            border-top: 2px dashed var(--purple);
             text-align: left;
         }
 
         .recent-games h4 {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            color: var(--hot-pink);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
 
         .game-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            font-size: 14px;
-            color: #555;
+            padding: 10px 0;
+            font-size: 13px;
+            color: #a090b8;
+            border-bottom: 1px solid rgba(107, 45, 155, 0.3);
+        }
+
+        .game-item:last-child {
+            border-bottom: none;
+        }
+
+        .game-item .player {
+            color: #c9b8e0;
         }
 
         .game-item .points {
-            color: #FF3008;
-            font-weight: 600;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--yellow);
+            text-shadow: 2px 2px 0 var(--orange);
+        }
+
+        .info {
+            margin-top: 30px;
+            color: #6a5a7a;
+            font-size: 11px;
+            letter-spacing: 1px;
         }
 
         /* Responsive */
         @media (max-width: 500px) {
             .container {
-                padding: 40px 25px;
+                padding: 35px 25px;
+                margin: 10px;
             }
 
             h1 {
-                font-size: 26px;
+                font-size: 38px;
             }
 
-            .emoji {
-                font-size: 56px;
+            .tagline {
+                font-size: 8px;
+            }
+
+            .basketball {
+                font-size: 60px;
+            }
+
+            .container::before {
+                border-left-width: 30px;
+                border-bottom-width: 30px;
+            }
+
+            .container::after {
+                border-right-width: 30px;
+                border-top-width: 30px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Stars -->
+    <div class="stars" id="stars"></div>
+
     <div class="container">
-        <div class="emoji">🏀</div>
-        <h1>50-Point Alerts</h1>
+        <div class="basketball">🏀</div>
+        <h1>50-POINT ALERTS</h1>
+        <p class="tagline">* * * Ballin' Since '95 * * *</p>
         <p class="subtitle">
             Get notified when DoorDash's <span class="highlight">50% OFF</span>
             promo is live after an NBA player drops 50+ points
@@ -233,59 +402,58 @@
             <input
                 type="email"
                 name="email"
-                placeholder="your@email.com"
+                placeholder="DROP YOUR EMAIL HERE..."
                 required
                 autocomplete="email"
             >
-            <button type="submit">Get Alerts 🔔</button>
+            <button type="submit">JOIN THE SQUAD</button>
         </form>
 
-        <div id="success-message" class="success-message">
-            ✅ <strong>You're in!</strong> We'll email you at 9 AM PT when the deal is live.
-        </div>
-
         <div class="how-it-works">
-            <h3>How it works</h3>
+            <h3>THE GAME PLAN</h3>
             <ol>
-                <li>NBA player scores 50+ points</li>
-                <li>DoorDash runs 50% off promo (9-11 AM PT)</li>
-                <li>You get an email at 9 AM PT sharp</li>
+                <li>NBA player drops 50+ points</li>
+                <li>DoorDash runs 50% off (9-11 AM PT)</li>
+                <li>You get alerted at 9 AM sharp</li>
             </ol>
         </div>
 
         <div class="recent-games">
-            <h4>Recent 50+ Point Games</h4>
+            <h4>RECENT 50-POINT GAMES</h4>
             <div class="game-item">
-                <span>Jan 25, 2024 - Luka Doncic</span>
+                <span class="player">Jan 26, 2024 - Luka Doncic</span>
                 <span class="points">73 PTS</span>
             </div>
             <div class="game-item">
-                <span>Jan 22, 2024 - Devin Booker</span>
+                <span class="player">Jan 26, 2024 - Devin Booker</span>
                 <span class="points">62 PTS</span>
             </div>
             <div class="game-item">
-                <span>Jan 8, 2024 - Giannis Antetokounmpo</span>
-                <span class="points">55 PTS</span>
+                <span class="player">Dec 25, 2023 - Luka Doncic</span>
+                <span class="points">50 PTS</span>
             </div>
         </div>
 
         <p class="info">
-            Free forever · Unsubscribe anytime · No spam
+            FREE FOREVER // UNSUBSCRIBE ANYTIME // NO SPAM
         </p>
     </div>
 
     <script>
-        // Handle form submission
-        // Note: For Resend Audience, you may need to handle this via API
-        // This is a placeholder for client-side feedback
+        // Generate floating stars
+        const starsContainer = document.getElementById('stars');
+        const starSymbols = ['★', '✦', '✧', '⋆'];
 
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            // If using Resend's hosted form, it will redirect
-            // If using API, prevent default and handle via fetch
-
-            // For now, show success message on submit
-            // You'll customize this based on your actual integration
-        });
+        for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.textContent = starSymbols[Math.floor(Math.random() * starSymbols.length)];
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            star.style.color = ['#FFD700', '#00CED1', '#FF1493', '#FF6B35'][Math.floor(Math.random() * 4)];
+            starsContainer.appendChild(star);
+        }
     </script>
 </body>
 </html>

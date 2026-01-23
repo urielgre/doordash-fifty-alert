@@ -62,18 +62,18 @@ def get_subscribers() -> list:
 
 
 def build_email_html(performances: list) -> str:
-    """Build the alert email HTML."""
+    """Build the alert email HTML with 90s NBA vibes."""
 
     # Build player list
     if len(performances) == 1:
         perf = performances[0]
-        player_text = f"<strong>{perf['player']}</strong> dropped <strong>{perf['points']} points</strong> last night!"
+        player_text = f"<span style='color: #FFD700; font-weight: bold;'>{perf['player']}</span> dropped <span style='color: #FF1493; font-weight: bold;'>{perf['points']} POINTS</span> last night!"
     else:
-        players = ", ".join([
-            f"<strong>{p['player']}</strong> ({p['points']} pts)"
+        players = " // ".join([
+            f"<span style='color: #FFD700;'>{p['player']}</span> ({p['points']})"
             for p in performances
         ])
-        player_text = f"Multiple players went off: {players}"
+        player_text = f"Multiple ballers went off: {players}"
 
     return f"""
 <!DOCTYPE html>
@@ -81,57 +81,65 @@ def build_email_html(performances: list) -> str:
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5;">
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #2D1B4E;">
     <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <div style="background: linear-gradient(180deg, #1a0a2e 0%, #2D1B4E 100%); border: 4px solid #00CED1; position: relative;">
+
+            <!-- Yellow Corner Triangle (top-left) -->
+            <div style="width: 0; height: 0; border-left: 40px solid #FFD700; border-bottom: 40px solid transparent; position: absolute; top: -4px; left: -4px;"></div>
 
             <!-- Header -->
-            <div style="background: linear-gradient(135deg, #FF3008 0%, #FF6B47 100%); padding: 30px; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 10px;">🏀</div>
-                <h1 style="color: white; margin: 0; font-size: 28px;">50% OFF is LIVE!</h1>
+            <div style="background: linear-gradient(135deg, #6B2D9B 0%, #2D1B4E 100%); padding: 30px; text-align: center; border-bottom: 3px solid #FF6B35;">
+                <div style="font-size: 60px; margin-bottom: 10px;">🏀</div>
+                <h1 style="font-family: 'Bebas Neue', Arial, sans-serif; color: #FFD700; margin: 0; font-size: 42px; letter-spacing: 4px; text-shadow: 3px 3px 0 #FF6B35;">50% OFF IS LIVE!</h1>
+                <p style="color: #00CED1; font-size: 12px; letter-spacing: 3px; margin-top: 8px;">★ ★ ★ BALLIN' SINCE '95 ★ ★ ★</p>
             </div>
 
             <!-- Content -->
             <div style="padding: 30px;">
-                <p style="font-size: 18px; color: #333; line-height: 1.6; margin-top: 0;">
+                <p style="font-size: 18px; color: #c9b8e0; line-height: 1.7; margin-top: 0;">
                     {player_text}
                 </p>
 
                 <!-- Promo Box -->
-                <div style="background: #FF3008; color: white; padding: 25px; border-radius: 12px; text-align: center; margin: 25px 0;">
-                    <div style="font-size: 36px; font-weight: bold; margin-bottom: 5px;">50% OFF</div>
-                    <div style="font-size: 16px; opacity: 0.9;">Valid until 11:00 AM PT today</div>
+                <div style="background: linear-gradient(90deg, #FF6B35 0%, #FF1493 100%); color: white; padding: 25px; text-align: center; margin: 25px 0; border-left: 5px solid #FFD700;">
+                    <div style="font-family: 'Bebas Neue', Arial, sans-serif; font-size: 48px; font-weight: bold; letter-spacing: 3px; text-shadow: 3px 3px 0 #6B2D9B;">50% OFF</div>
+                    <div style="font-size: 14px; letter-spacing: 2px; margin-top: 5px;">VALID UNTIL 11:00 AM PT TODAY</div>
                 </div>
 
                 <!-- How to use -->
-                <h3 style="color: #333; margin-bottom: 15px;">How to claim:</h3>
-                <ol style="color: #555; line-height: 1.8; padding-left: 20px; margin: 0;">
-                    <li>Open the <strong>DoorDash app</strong></li>
-                    <li>Look for the <strong>50% off banner</strong></li>
-                    <li>Order before <strong>11 AM PT</strong>!</li>
+                <h3 style="font-family: 'Bebas Neue', Arial, sans-serif; color: #00CED1; margin-bottom: 15px; font-size: 20px; letter-spacing: 3px;">THE GAME PLAN:</h3>
+                <ol style="color: #c9b8e0; line-height: 2; padding-left: 20px; margin: 0;">
+                    <li>Open the <strong style="color: #FFD700;">DoorDash app</strong></li>
+                    <li>Look for the <strong style="color: #FFD700;">50% off banner</strong></li>
+                    <li>Order before <strong style="color: #FF1493;">11 AM PT</strong>!</li>
                 </ol>
 
-                <!-- Stats Box (if available) -->
-                <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin-top: 25px;">
-                    <h4 style="margin: 0 0 15px 0; color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Last Night's Big Performance</h4>
+                <!-- Stats Box -->
+                <div style="background: rgba(0, 206, 209, 0.1); padding: 20px; margin-top: 25px; border-left: 4px solid #00CED1;">
+                    <h4 style="margin: 0 0 15px 0; color: #FF1493; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Bebas Neue', Arial, sans-serif;">LAST NIGHT'S BIG PERFORMANCE</h4>
                     {"".join([f'''
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
-                        <span style="color: #333; font-weight: bold;">{p['player']} ({p['team']})</span>
-                        <span style="color: #FF3008; font-weight: bold;">{p['points']} PTS</span>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(107, 45, 155, 0.3);">
+                        <span style="color: #c9b8e0; font-weight: bold;">{p['player']} ({p['team']})</span>
+                        <span style="font-family: 'Bebas Neue', Arial, sans-serif; font-size: 22px; color: #FFD700; text-shadow: 2px 2px 0 #FF6B35;">{p['points']} PTS</span>
                     </div>
                     ''' for p in performances])}
                 </div>
             </div>
 
             <!-- Footer -->
-            <div style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #eee;">
-                <p style="color: #999; font-size: 12px; margin: 0;">
-                    You're receiving this because you signed up for 50-Point Alerts.
-                    <br>
-                    <a href="{{{{RESEND_UNSUBSCRIBE_URL}}}}" style="color: #999;">Unsubscribe</a>
+            <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-top: 2px dashed #6B2D9B;">
+                <p style="color: #6a5a7a; font-size: 11px; margin: 0; letter-spacing: 1px;">
+                    FREE FOREVER // UNSUBSCRIBE ANYTIME // NO SPAM
+                    <br><br>
+                    <a href="{{{{RESEND_UNSUBSCRIBE_URL}}}}" style="color: #00CED1;">Unsubscribe</a>
                 </p>
             </div>
+
+            <!-- Pink Corner Triangle (bottom-right) -->
+            <div style="width: 0; height: 0; border-right: 40px solid #FF1493; border-top: 40px solid transparent; position: absolute; bottom: -4px; right: -4px;"></div>
 
         </div>
     </div>
@@ -141,31 +149,37 @@ def build_email_html(performances: list) -> str:
 
 
 def build_email_text(performances: list) -> str:
-    """Build plain text version of email."""
+    """Build plain text version of email with 90s vibes."""
 
     if len(performances) == 1:
         perf = performances[0]
-        player_text = f"{perf['player']} dropped {perf['points']} points last night!"
+        player_text = f"{perf['player']} DROPPED {perf['points']} POINTS last night!"
     else:
-        players = ", ".join([f"{p['player']} ({p['points']} pts)" for p in performances])
-        player_text = f"Multiple players went off: {players}"
+        players = " // ".join([f"{p['player']} ({p['points']})" for p in performances])
+        player_text = f"Multiple ballers went off: {players}"
 
     stats = "\n".join([
-        f"  - {p['player']} ({p['team']}): {p['points']} PTS"
+        f"  * {p['player']} ({p['team']}): {p['points']} PTS"
         for p in performances
     ])
 
     return f"""
-🏀 DoorDash 50% OFF is LIVE!
+==================================
+  50-POINT ALERTS
+  * * * Ballin' Since '95 * * *
+==================================
 
 {player_text}
 
-═══════════════════════════════
-       50% OFF
-   Valid until 11:00 AM PT
-═══════════════════════════════
++--------------------------------+
+|                                |
+|          50% OFF               |
+|                                |
+|   Valid until 11:00 AM PT      |
+|                                |
++--------------------------------+
 
-How to claim:
+THE GAME PLAN:
 1. Open the DoorDash app
 2. Look for the 50% off banner
 3. Order before 11 AM PT!
