@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>50-POINT ALERTS | DoorDash 50% OFF</title>
-    <meta name="description" content="Get notified when DoorDash's 50% off promo is live after an NBA player scores 50+ points.">
+    <title>50-Point Alerts | Get Notified for DoorDash NBA Promos</title>
+    <meta name="description" content="Get notified when DoorDash's NBA 50-point promo is live. Free alerts straight to your inbox.">
 
-    <!-- Google Fonts - 90s NBA Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
 
     <style>
@@ -22,304 +20,124 @@
         }
 
         :root {
-            /* Authentic 90s NBA - Charlotte Hornets palette */
-            --hornets-teal: #00778B;
-            --hornets-purple: #1D1160;
-            --hornets-purple-light: #280D5F;
-            --court-wood: #C4A259;
-            --court-wood-dark: #8B6914;
-            --gold-foil: #D4AF37;
-            --silver: #C0C0C0;
-            --off-white: #F5F5DC;
-            --black: #0a0a0a;
+            --doordash-red: #FF3008;
+            --doordash-dark: #1F1F1F;
+            --white: #FFFFFF;
+            --gray-100: #F7F7F7;
+            --gray-200: #EBEBEB;
+            --gray-400: #999999;
+            --gray-600: #666666;
         }
 
         body {
-            font-family: 'Roboto Condensed', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
+            background: linear-gradient(135deg, #FF3008 0%, #C41E00 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: var(--hornets-purple);
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* Hardwood Court Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                linear-gradient(90deg,
-                    rgba(0, 0, 0, 0.1) 0%,
-                    transparent 1%,
-                    transparent 99%,
-                    rgba(0, 0, 0, 0.1) 100%
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    #8B6914 0px,
-                    #A67C00 2px,
-                    #C4A259 4px,
-                    #B8960B 8px,
-                    #8B6914 12px
-                );
-            z-index: -2;
-        }
-
-        /* Court Lines Overlay */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 50% 120%, transparent 60%, rgba(29, 17, 96, 0.3) 100%),
-                linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15));
-            z-index: -1;
-        }
-
-        /* Main Card - Trading Card Style */
-        .card {
-            background: linear-gradient(135deg, var(--hornets-purple) 0%, var(--hornets-purple-light) 50%, var(--hornets-purple) 100%);
-            max-width: 420px;
+        .container {
+            max-width: 440px;
             width: 100%;
-            position: relative;
-            padding: 4px;
-            border-radius: 12px;
         }
 
-        /* Gold Foil Border - Trading Card Effect */
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            padding: 3px;
-            background: linear-gradient(135deg,
-                var(--gold-foil) 0%,
-                #FFF8DC 25%,
-                var(--gold-foil) 50%,
-                #B8860B 75%,
-                var(--gold-foil) 100%
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .card-inner {
-            background: var(--hornets-purple);
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Pinstripe Pattern - Classic 90s Jersey */
-        .pinstripes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent 0px,
-                transparent 8px,
-                rgba(0, 119, 139, 0.12) 8px,
-                rgba(0, 119, 139, 0.12) 10px
-            );
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            padding: 30px 28px;
-        }
-
-        /* Header Section */
-        .header {
+        /* Hero Section */
+        .hero {
             text-align: center;
             margin-bottom: 24px;
-            position: relative;
         }
 
-        /* NBA-style logo treatment */
-        .logo-badge {
-            display: inline-block;
-            background: linear-gradient(180deg, var(--hornets-teal) 0%, #005A6A 100%);
-            padding: 8px 20px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            border: 2px solid var(--gold-foil);
-            box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin-bottom: 20px;
         }
 
-        .logo-badge span {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--off-white);
-            text-transform: uppercase;
-        }
-
-        h1 {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 48px;
-            color: var(--off-white);
-            letter-spacing: 2px;
-            line-height: 1;
-            margin-bottom: 4px;
-            text-shadow:
-                3px 3px 0 var(--hornets-teal),
-                -1px -1px 0 rgba(0,0,0,0.3);
-        }
-
-        .title-accent {
-            color: var(--gold-foil);
-        }
-
-        .subtitle {
-            font-family: 'Oswald', sans-serif;
+        .hero-badge span {
+            color: var(--white);
+            font-size: 13px;
             font-weight: 500;
-            font-size: 14px;
-            color: var(--hornets-teal);
-            letter-spacing: 4px;
-            text-transform: uppercase;
         }
 
-        /* Deal Badge - Jersey Number Style */
-        .deal-badge {
-            background: var(--hornets-teal);
-            margin: 20px auto;
-            padding: 16px 24px;
-            max-width: 280px;
-            position: relative;
-            clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
-        }
-
-        .deal-badge::before {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: var(--hornets-purple);
-            clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
-        }
-
-        .deal-content {
-            position: relative;
-            text-align: center;
-        }
-
-        .deal-percent {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
+        .hero h1 {
+            color: var(--white);
             font-size: 42px;
-            color: var(--off-white);
-            line-height: 1;
-            text-shadow: 2px 2px 0 var(--hornets-teal);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
         }
 
-        .deal-text {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-size: 12px;
-            color: var(--hornets-teal);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            line-height: 1.5;
         }
 
-        /* Description */
-        .description {
-            text-align: center;
-            color: var(--silver);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-            padding: 0 10px;
+        /* Card */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
 
-        .description strong {
-            color: var(--off-white);
-        }
-
-        /* Form Section */
-        .form-section {
-            background: rgba(0, 0, 0, 0.25);
-            padding: 20px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 119, 139, 0.3);
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
         }
 
         .form-label {
-            font-family: 'Oswald', sans-serif;
-            font-size: 12px;
-            color: var(--hornets-teal);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
             display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--doordash-dark);
+            margin-bottom: 8px;
         }
 
         input[type="email"] {
             width: 100%;
             padding: 14px 16px;
-            font-size: 15px;
-            font-family: 'Roboto Condensed', sans-serif;
-            background: var(--black);
-            border: 2px solid var(--hornets-teal);
-            border-radius: 4px;
-            color: var(--off-white);
-            margin-bottom: 12px;
-            transition: all 0.2s ease;
+            font-size: 16px;
+            font-family: inherit;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
             outline: none;
+            transition: border-color 0.2s;
         }
 
         input[type="email"]:focus {
-            border-color: var(--gold-foil);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            border-color: var(--doordash-red);
         }
 
         input[type="email"]::placeholder {
-            color: #666;
+            color: var(--gray-400);
         }
 
         button {
             width: 100%;
-            padding: 14px 20px;
+            padding: 16px;
             font-size: 16px;
-            font-family: 'Oswald', sans-serif;
+            font-family: inherit;
             font-weight: 600;
-            letter-spacing: 2px;
-            background: linear-gradient(180deg, var(--hornets-teal) 0%, #005A6A 100%);
-            color: var(--off-white);
+            background: var(--doordash-red);
+            color: var(--white);
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            box-shadow: 0 4px 0 #003D4D;
+            transition: background 0.2s;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #003D4D;
-        }
-
-        button:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #003D4D;
+            background: #E62B00;
         }
 
         button:disabled {
@@ -330,61 +148,89 @@
         #success-msg {
             display: none;
             text-align: center;
-            padding: 16px;
-            background: rgba(0, 119, 139, 0.2);
-            border: 1px solid var(--hornets-teal);
-            border-radius: 4px;
-            color: var(--hornets-teal);
-            font-family: 'Oswald', sans-serif;
+            padding: 20px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        /* How it works */
+        .how-it-works {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .how-it-works h3 {
             font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        /* Stats Section - Trading Card Back Style */
-        .stats-section {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(0, 119, 139, 0.3);
-        }
-
-        .stats-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 700;
+            color: var(--doordash-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 16px;
         }
 
-        .stats-header::before,
-        .stats-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--hornets-teal), transparent);
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .stats-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 12px;
-            color: var(--gold-foil);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            white-space: nowrap;
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
         }
 
-        /* Game Cards */
-        .game-card {
+        .step-num {
+            width: 24px;
+            height: 24px;
+            background: var(--doordash-red);
+            color: var(--white);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            margin-bottom: 8px;
-            border-left: 3px solid var(--hornets-teal);
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
-        .game-card:last-child {
-            margin-bottom: 0;
+        .step-text {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.5;
+            padding-top: 2px;
+        }
+
+        /* Recent Games */
+        .recent-games {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .recent-games h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--doordash-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .game {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .game:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .game-info {
@@ -393,199 +239,147 @@
             gap: 2px;
         }
 
-        .player-name {
-            font-family: 'Oswald', sans-serif;
+        .game-player {
+            font-size: 14px;
             font-weight: 600;
-            font-size: 15px;
-            color: var(--off-white);
-            letter-spacing: 0.5px;
+            color: var(--doordash-dark);
         }
 
-        .game-details {
-            font-size: 11px;
-            color: #888;
-            letter-spacing: 0.5px;
+        .game-date {
+            font-size: 12px;
+            color: var(--gray-400);
         }
 
-        .points-badge {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 22px;
-            color: var(--gold-foil);
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        .game-points {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--doordash-red);
         }
 
-        /* How It Works */
-        .how-it-works {
-            margin-top: 20px;
-            padding: 16px;
-            background: rgba(0, 119, 139, 0.1);
-            border-radius: 4px;
-        }
-
-        .how-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 13px;
-            color: var(--hornets-teal);
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .how-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .how-list li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--silver);
-            font-size: 13px;
-            padding: 6px 0;
-        }
-
-        .step-num {
-            width: 20px;
-            height: 20px;
-            background: var(--hornets-teal);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Oswald', sans-serif;
-            font-size: 11px;
-            color: var(--off-white);
-            flex-shrink: 0;
-        }
-
-        /* Footer */
-        .footer {
+        /* Disclaimer */
+        .disclaimer {
+            margin-top: 24px;
             text-align: center;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(0, 119, 139, 0.2);
         }
 
-        .footer-text {
-            font-size: 10px;
-            color: #555;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .disclaimer p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Footer inside card */
+        .card-footer {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .card-footer p {
+            font-size: 12px;
+            color: var(--gray-400);
         }
 
         /* Responsive */
         @media (max-width: 480px) {
             body {
-                padding: 12px;
+                padding: 16px;
             }
 
-            .content {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .card {
                 padding: 24px 20px;
-            }
-
-            h1 {
-                font-size: 38px;
-            }
-
-            .deal-percent {
-                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="card-inner">
-            <div class="pinstripes"></div>
-            <div class="content">
-                <!-- Header -->
-                <div class="header">
-                    <div class="logo-badge">
-                        <span>DoorDash Promo Alert</span>
-                    </div>
-                    <h1>50<span class="title-accent">-</span>POINT</h1>
-                    <h1>ALERTS</h1>
-                    <p class="subtitle">Est. 2025</p>
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-badge">
+                <span>🏀</span>
+                <span>NBA 50-Point Promo Alerts</span>
+            </div>
+            <h1>They Drop 50,<br>You Save Big.</h1>
+            <p>Get notified the moment DoorDash's NBA promo goes live after a 50+ point game.</p>
+        </div>
+
+        <!-- Card -->
+        <div class="card">
+            <form id="signup-form">
+                <div class="form-group">
+                    <label class="form-label" for="email-input">Email Address</label>
+                    <input
+                        type="email"
+                        id="email-input"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                        autocomplete="email"
+                    >
                 </div>
+                <button type="submit" id="submit-btn">Get Free Alerts</button>
+            </form>
+            <div id="success-msg">
+                ✓ You're in! We'll email you at 9 AM PT when the promo is live.
+            </div>
 
-                <!-- Deal Badge -->
-                <div class="deal-badge">
-                    <div class="deal-content">
-                        <div class="deal-percent">50% OFF</div>
-                        <div class="deal-text">When a player drops 50+</div>
+            <!-- How it works -->
+            <div class="how-it-works">
+                <h3>How It Works</h3>
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <span class="step-text">An NBA player scores 50+ points in a game</span>
                     </div>
-                </div>
-
-                <!-- Description -->
-                <p class="description">
-                    Get notified at <strong>9 AM PT</strong> when DoorDash's 50% off promo is live —
-                    triggered every time an NBA player scores 50+ points.
-                </p>
-
-                <!-- Form -->
-                <div class="form-section">
-                    <form id="signup-form">
-                        <label class="form-label">Enter Your Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email-input"
-                            placeholder="your@email.com"
-                            required
-                            autocomplete="email"
-                        >
-                        <button type="submit" id="submit-btn">Get Alerts</button>
-                    </form>
-                    <div id="success-msg">
-                        You're in! We'll alert you at 9 AM PT when the deal drops.
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <span class="step-text">DoorDash activates their promo the next morning (9-11 AM PT)</span>
                     </div>
-                </div>
-
-                <!-- Recent Games -->
-                <div class="stats-section">
-                    <div class="stats-header">
-                        <span class="stats-title">Recent 50+ Games</span>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <span class="step-text">You get an email alert at 9 AM PT sharp</span>
                     </div>
-
-                    <div class="game-card">
-                        <div class="game-info">
-                            <span class="player-name">Anthony Edwards</span>
-                            <span class="game-details">Jan 17, 2026 • MIN @ SAS</span>
-                        </div>
-                        <span class="points-badge">55 PTS</span>
-                    </div>
-
-                    <div class="game-card">
-                        <div class="game-info">
-                            <span class="player-name">Shai Gilgeous-Alexander</span>
-                            <span class="game-details">Oct 23, 2025 • OKC @ IND</span>
-                        </div>
-                        <span class="points-badge">55 PTS</span>
-                    </div>
-                </div>
-
-                <!-- How It Works -->
-                <div class="how-it-works">
-                    <div class="how-title">How It Works</div>
-                    <ul class="how-list">
-                        <li><span class="step-num">1</span> NBA player scores 50+ points</li>
-                        <li><span class="step-num">2</span> DoorDash runs 50% off (9-11 AM PT next day)</li>
-                        <li><span class="step-num">3</span> You get alerted at 9 AM sharp</li>
-                    </ul>
-                </div>
-
-                <!-- Footer -->
-                <div class="footer">
-                    <p class="footer-text">Free Forever • Unsubscribe Anytime • No Spam</p>
                 </div>
             </div>
+
+            <!-- Recent Games -->
+            <div class="recent-games">
+                <h3>Recent 50+ Point Games</h3>
+                <div class="game">
+                    <div class="game-info">
+                        <span class="game-player">Anthony Edwards</span>
+                        <span class="game-date">Jan 17, 2026 · MIN @ SAS</span>
+                    </div>
+                    <span class="game-points">55 PTS</span>
+                </div>
+                <div class="game">
+                    <div class="game-info">
+                        <span class="game-player">Shai Gilgeous-Alexander</span>
+                        <span class="game-date">Oct 23, 2025 · OKC @ IND</span>
+                    </div>
+                    <span class="game-points">55 PTS</span>
+                </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="card-footer">
+                <p>Free forever · Unsubscribe anytime · No spam</p>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <p>This is an independent notification service. We are not affiliated with, endorsed by, or sponsored by DoorDash, Inc. or the National Basketball Association (NBA). All trademarks belong to their respective owners.</p>
         </div>
     </div>
 
     <script>
-        // Form submission handler
         const WORKER_URL = 'https://fifty-point-signup.urielgre.workers.dev';
 
         const form = document.getElementById('signup-form');
@@ -600,7 +394,7 @@
             if (!email) return;
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Joining...';
+            submitBtn.textContent = 'Signing up...';
 
             try {
                 const response = await fetch(WORKER_URL, {
@@ -617,13 +411,13 @@
                 } else {
                     alert(result.error || 'Something went wrong. Please try again.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Get Alerts';
+                    submitBtn.textContent = 'Get Free Alerts';
                 }
             } catch (error) {
                 console.error('Signup error:', error);
                 alert('Connection error. Please try again.');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Get Alerts';
+                submitBtn.textContent = 'Get Free Alerts';
             }
         });
     </script>
