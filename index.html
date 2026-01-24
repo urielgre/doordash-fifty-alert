@@ -32,33 +32,33 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #FF3008 0%, #C41E00 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            background: var(--gray-100);
         }
 
-        .container {
-            max-width: 440px;
-            width: 100%;
-        }
-
-        /* Hero Section */
+        /* Hero Section with Background Image */
         .hero {
+            background: linear-gradient(135deg, rgba(255, 48, 8, 0.95) 0%, rgba(180, 30, 0, 0.95) 100%),
+                        url('pics/skysports-stephen-curry-golden-state-warriors_5147327.jpg');
+            background-size: cover;
+            background-position: center top;
+            padding: 60px 20px;
             text-align: center;
-            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             padding: 8px 16px;
             border-radius: 100px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .hero-badge span {
@@ -69,7 +69,7 @@
 
         .hero h1 {
             color: var(--white);
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 16px;
@@ -78,19 +78,47 @@
 
         .hero p {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
-        /* Card */
+        /* Main Content */
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Cards */
         .card {
             background: var(--white);
             border-radius: 16px;
-            padding: 32px 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
-        /* Form */
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--doordash-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        /* Signup Card */
+        .signup-card {
+            grid-row: span 2;
+        }
+
         .form-group {
             margin-bottom: 16px;
         }
@@ -155,26 +183,31 @@
             font-weight: 500;
         }
 
-        /* How it works */
-        .how-it-works {
-            margin-top: 28px;
+        /* Promo Preview */
+        .promo-preview {
+            margin-top: 24px;
             padding-top: 24px;
             border-top: 1px solid var(--gray-200);
         }
 
-        .how-it-works h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--doordash-dark);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
+        .promo-preview img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
+        .promo-caption {
+            font-size: 12px;
+            color: var(--gray-400);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* How it works */
         .steps {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         .step {
@@ -184,53 +217,52 @@
         }
 
         .step-num {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             background: var(--doordash-red);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             flex-shrink: 0;
         }
 
-        .step-text {
+        .step-content {
+            padding-top: 4px;
+        }
+
+        .step-title {
             font-size: 14px;
+            font-weight: 600;
+            color: var(--doordash-dark);
+            margin-bottom: 2px;
+        }
+
+        .step-text {
+            font-size: 13px;
             color: var(--gray-600);
-            line-height: 1.5;
-            padding-top: 2px;
+            line-height: 1.4;
         }
 
         /* Recent Games */
-        .recent-games {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .recent-games h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--doordash-dark);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-        }
-
         .game {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid var(--gray-100);
         }
 
         .game:last-child {
             border-bottom: none;
             padding-bottom: 0;
+        }
+
+        .game:first-child {
+            padding-top: 0;
         }
 
         .game-info {
@@ -240,7 +272,7 @@
         }
 
         .game-player {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--doordash-dark);
         }
@@ -251,44 +283,52 @@
         }
 
         .game-points {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--doordash-red);
         }
 
-        /* Disclaimer */
-        .disclaimer {
-            margin-top: 24px;
+        /* Footer */
+        .footer {
+            background: var(--doordash-dark);
+            padding: 40px 20px;
             text-align: center;
         }
 
-        .disclaimer p {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.5;
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Footer inside card */
-        .card-footer {
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid var(--gray-200);
-            text-align: center;
-        }
-
-        .card-footer p {
+        .footer p {
             font-size: 12px;
-            color: var(--gray-400);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .footer p:last-child {
+            margin-bottom: 0;
         }
 
         /* Responsive */
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 20px;
             }
 
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
+            }
+
+            .main {
+                grid-template-columns: 1fr;
+                padding: 24px 16px;
+                margin-top: -30px;
+            }
+
+            .signup-card {
+                grid-row: auto;
             }
 
             .card {
@@ -298,9 +338,9 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Hero -->
-        <div class="hero">
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
             <div class="hero-badge">
                 <span>🏀</span>
                 <span>NBA 50-Point Promo Alerts</span>
@@ -308,9 +348,14 @@
             <h1>They Drop 50,<br>You Save Big.</h1>
             <p>Get notified the moment DoorDash's NBA promo goes live after a 50+ point game.</p>
         </div>
+    </div>
 
-        <!-- Card -->
-        <div class="card">
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Signup Card -->
+        <div class="card signup-card">
+            <h2 class="card-title">Get Free Alerts</h2>
+
             <form id="signup-form">
                 <div class="form-group">
                     <label class="form-label" for="email-input">Email Address</label>
@@ -323,61 +368,74 @@
                         autocomplete="email"
                     >
                 </div>
-                <button type="submit" id="submit-btn">Get Free Alerts</button>
+                <button type="submit" id="submit-btn">Sign Up — It's Free</button>
             </form>
             <div id="success-msg">
                 ✓ You're in! We'll email you at 9 AM PT when the promo is live.
             </div>
 
-            <!-- How it works -->
-            <div class="how-it-works">
-                <h3>How It Works</h3>
-                <div class="steps">
-                    <div class="step">
-                        <span class="step-num">1</span>
-                        <span class="step-text">An NBA player scores 50+ points in a game</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">2</span>
-                        <span class="step-text">DoorDash activates their promo the next morning (9-11 AM PT)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">3</span>
-                        <span class="step-text">You get an email alert at 9 AM PT sharp</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Games -->
-            <div class="recent-games">
-                <h3>Recent 50+ Point Games</h3>
-                <div class="game">
-                    <div class="game-info">
-                        <span class="game-player">Anthony Edwards</span>
-                        <span class="game-date">Jan 17, 2026 · MIN @ SAS</span>
-                    </div>
-                    <span class="game-points">55 PTS</span>
-                </div>
-                <div class="game">
-                    <div class="game-info">
-                        <span class="game-player">Shai Gilgeous-Alexander</span>
-                        <span class="game-date">Oct 23, 2025 · OKC @ IND</span>
-                    </div>
-                    <span class="game-points">55 PTS</span>
-                </div>
-            </div>
-
-            <!-- Card Footer -->
-            <div class="card-footer">
-                <p>Free forever · Unsubscribe anytime · No spam</p>
+            <!-- Promo Preview -->
+            <div class="promo-preview">
+                <img src="pics/doordash-axed-the-nba50-50-off-v0-uq9bhn2rh5eg1.jpg" alt="DoorDash NBA 50-Point Promo Example">
+                <p class="promo-caption">Example of the DoorDash promo you'll be notified about</p>
             </div>
         </div>
 
-        <!-- Disclaimer -->
-        <div class="disclaimer">
-            <p>This is an independent notification service. We are not affiliated with, endorsed by, or sponsored by DoorDash, Inc. or the National Basketball Association (NBA). All trademarks belong to their respective owners.</p>
+        <!-- How It Works -->
+        <div class="card">
+            <h2 class="card-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div class="step-content">
+                        <div class="step-title">Player Scores 50+</div>
+                        <div class="step-text">An NBA player drops 50 or more points in a game</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <div class="step-content">
+                        <div class="step-title">Promo Goes Live</div>
+                        <div class="step-text">DoorDash activates the deal the next morning (9-11 AM PT)</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <div class="step-content">
+                        <div class="step-title">You Get Notified</div>
+                        <div class="step-text">We email you at 9 AM PT sharp so you don't miss it</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Games -->
+        <div class="card">
+            <h2 class="card-title">Recent 50+ Point Games</h2>
+            <div class="game">
+                <div class="game-info">
+                    <span class="game-player">Anthony Edwards</span>
+                    <span class="game-date">Jan 17, 2026 · MIN @ SAS</span>
+                </div>
+                <span class="game-points">55</span>
+            </div>
+            <div class="game">
+                <div class="game-info">
+                    <span class="game-player">Shai Gilgeous-Alexander</span>
+                    <span class="game-date">Oct 23, 2025 · OKC @ IND</span>
+                </div>
+                <span class="game-points">55</span>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Free forever · Unsubscribe anytime · No spam</p>
+            <p>This is an independent notification service. We are not affiliated with, endorsed by, or sponsored by DoorDash, Inc. or the National Basketball Association (NBA). All trademarks belong to their respective owners.</p>
+        </div>
+    </footer>
 
     <script>
         const WORKER_URL = 'https://fifty-point-signup.urielgre.workers.dev';
@@ -411,13 +469,13 @@
                 } else {
                     alert(result.error || 'Something went wrong. Please try again.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Get Free Alerts';
+                    submitBtn.textContent = 'Sign Up — It\'s Free';
                 }
             } catch (error) {
                 console.error('Signup error:', error);
                 alert('Connection error. Please try again.');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Get Free Alerts';
+                submitBtn.textContent = 'Sign Up — It\'s Free';
             }
         });
     </script>
