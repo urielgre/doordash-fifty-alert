@@ -6,10 +6,10 @@
     <title>50-POINT ALERTS | DoorDash 50% OFF</title>
     <meta name="description" content="Get notified when DoorDash's 50% off promo is live after an NBA player scores 50+ points.">
 
-    <!-- Google Fonts - 90s Bold Style -->
+    <!-- Google Fonts - 90s NBA Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
@@ -22,27 +22,31 @@
         }
 
         :root {
-            --purple: #6B2D9B;
-            --teal: #00CED1;
-            --orange: #FF6B35;
-            --hot-pink: #FF1493;
-            --yellow: #FFD700;
-            --dark-purple: #2D1B4E;
+            /* Authentic 90s NBA - Charlotte Hornets palette */
+            --hornets-teal: #00778B;
+            --hornets-purple: #1D1160;
+            --hornets-purple-light: #280D5F;
+            --court-wood: #C4A259;
+            --court-wood-dark: #8B6914;
+            --gold-foil: #D4AF37;
+            --silver: #C0C0C0;
+            --off-white: #F5F5DC;
+            --black: #0a0a0a;
         }
 
         body {
-            font-family: 'Russo One', sans-serif;
+            font-family: 'Roboto Condensed', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: var(--dark-purple);
+            background: var(--hornets-purple);
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Animated 90s Background */
+        /* Hardwood Court Background */
         body::before {
             content: '';
             position: fixed;
@@ -51,11 +55,24 @@
             right: 0;
             bottom: 0;
             background:
-                linear-gradient(135deg, var(--purple) 0%, var(--dark-purple) 50%, #1a0a2e 100%);
+                linear-gradient(90deg,
+                    rgba(0, 0, 0, 0.1) 0%,
+                    transparent 1%,
+                    transparent 99%,
+                    rgba(0, 0, 0, 0.1) 100%
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    #8B6914 0px,
+                    #A67C00 2px,
+                    #C4A259 4px,
+                    #B8960B 8px,
+                    #8B6914 12px
+                );
             z-index: -2;
         }
 
-        /* Geometric Pattern Overlay */
+        /* Court Lines Overlay */
         body::after {
             content: '';
             position: fixed;
@@ -63,402 +80,511 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image:
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 35px,
-                    rgba(0, 206, 209, 0.03) 35px,
-                    rgba(0, 206, 209, 0.03) 70px
-                ),
-                repeating-linear-gradient(
-                    -45deg,
-                    transparent,
-                    transparent 35px,
-                    rgba(255, 107, 53, 0.03) 35px,
-                    rgba(255, 107, 53, 0.03) 70px
-                );
+            background:
+                radial-gradient(circle at 50% 120%, transparent 60%, rgba(29, 17, 96, 0.3) 100%),
+                linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15));
             z-index: -1;
-            animation: patternMove 20s linear infinite;
         }
 
-        @keyframes patternMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(70px, 70px); }
+        /* Main Card - Trading Card Style */
+        .card {
+            background: linear-gradient(135deg, var(--hornets-purple) 0%, var(--hornets-purple-light) 50%, var(--hornets-purple) 100%);
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            padding: 4px;
+            border-radius: 12px;
         }
 
-        /* Floating Stars */
-        .stars {
-            position: fixed;
+        /* Gold Foil Border - Trading Card Effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 3px;
+            background: linear-gradient(135deg,
+                var(--gold-foil) 0%,
+                #FFF8DC 25%,
+                var(--gold-foil) 50%,
+                #B8860B 75%,
+                var(--gold-foil) 100%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .card-inner {
+            background: var(--hornets-purple);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Pinstripe Pattern - Classic 90s Jersey */
+        .pinstripes {
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 8px,
+                rgba(0, 119, 139, 0.12) 8px,
+                rgba(0, 119, 139, 0.12) 10px
+            );
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
         }
 
-        .star {
-            position: absolute;
-            font-size: 20px;
-            animation: twinkle 2s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .container {
-            background: linear-gradient(180deg, #1a0a2e 0%, var(--dark-purple) 100%);
-            border-radius: 0;
-            padding: 50px 40px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
+        .content {
             position: relative;
-            border: 4px solid var(--teal);
-            box-shadow:
-                8px 8px 0 var(--orange),
-                16px 16px 0 var(--hot-pink),
-                0 0 60px rgba(0, 206, 209, 0.3);
+            z-index: 2;
+            padding: 30px 28px;
         }
 
-        /* Corner Triangles */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            width: 0;
-            height: 0;
-            border-left: 40px solid var(--yellow);
-            border-bottom: 40px solid transparent;
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            position: relative;
         }
 
-        .container::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            right: -4px;
-            width: 0;
-            height: 0;
-            border-right: 40px solid var(--hot-pink);
-            border-top: 40px solid transparent;
-        }
-
-        .basketball {
-            font-size: 80px;
-            margin-bottom: 15px;
+        /* NBA-style logo treatment */
+        .logo-badge {
             display: inline-block;
-            animation: spin-bounce 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.8));
+            background: linear-gradient(180deg, var(--hornets-teal) 0%, #005A6A 100%);
+            padding: 8px 20px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            border: 2px solid var(--gold-foil);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.3);
         }
 
-        @keyframes spin-bounce {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-20px) rotate(90deg);
-            }
-            50% {
-                transform: translateY(0) rotate(180deg);
-            }
-            75% {
-                transform: translateY(-10px) rotate(270deg);
-            }
-        }
-
-        h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 52px;
-            letter-spacing: 4px;
-            margin-bottom: 5px;
-            background: linear-gradient(180deg, var(--yellow) 0%, var(--orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            filter: drop-shadow(3px 3px 0 var(--hot-pink));
-        }
-
-        .tagline {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            color: var(--teal);
-            letter-spacing: 2px;
-            margin-bottom: 25px;
+        .logo-badge span {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--off-white);
             text-transform: uppercase;
         }
 
-        .subtitle {
-            color: #c9b8e0;
-            margin-bottom: 30px;
-            line-height: 1.7;
-            font-size: 15px;
-            font-family: 'Russo One', sans-serif;
-        }
-
-        .highlight {
-            background: linear-gradient(90deg, var(--orange) 0%, var(--hot-pink) 100%);
-            color: white;
-            padding: 4px 12px;
+        h1 {
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
-            display: inline-block;
-            transform: skewX(-5deg);
-            box-shadow: 3px 3px 0 var(--yellow);
+            font-size: 48px;
+            color: var(--off-white);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 4px;
+            text-shadow:
+                3px 3px 0 var(--hornets-teal),
+                -1px -1px 0 rgba(0,0,0,0.3);
         }
 
-        form {
-            margin-top: 25px;
+        .title-accent {
+            color: var(--gold-foil);
+        }
+
+        .subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--hornets-teal);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Deal Badge - Jersey Number Style */
+        .deal-badge {
+            background: var(--hornets-teal);
+            margin: 20px auto;
+            padding: 16px 24px;
+            max-width: 280px;
+            position: relative;
+            clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+        }
+
+        .deal-badge::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--hornets-purple);
+            clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+        }
+
+        .deal-content {
+            position: relative;
+            text-align: center;
+        }
+
+        .deal-percent {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 42px;
+            color: var(--off-white);
+            line-height: 1;
+            text-shadow: 2px 2px 0 var(--hornets-teal);
+        }
+
+        .deal-text {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 12px;
+            color: var(--hornets-teal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Description */
+        .description {
+            text-align: center;
+            color: var(--silver);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        .description strong {
+            color: var(--off-white);
+        }
+
+        /* Form Section */
+        .form-section {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 119, 139, 0.3);
+        }
+
+        .form-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            color: var(--hornets-teal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
         }
 
         input[type="email"] {
             width: 100%;
-            padding: 18px 20px;
-            font-size: 16px;
-            font-family: 'Russo One', sans-serif;
-            background: rgba(0, 0, 0, 0.4);
-            border: 3px solid var(--teal);
-            color: white;
-            margin-bottom: 14px;
-            transition: all 0.3s ease;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: 'Roboto Condensed', sans-serif;
+            background: var(--black);
+            border: 2px solid var(--hornets-teal);
+            border-radius: 4px;
+            color: var(--off-white);
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
             outline: none;
         }
 
         input[type="email"]:focus {
-            border-color: var(--yellow);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            background: rgba(0, 0, 0, 0.6);
+            border-color: var(--gold-foil);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
         }
 
         input[type="email"]::placeholder {
-            color: #8a7aa0;
+            color: #666;
         }
 
         button {
             width: 100%;
-            padding: 20px;
-            font-size: 18px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, var(--orange) 0%, var(--hot-pink) 100%);
-            color: white;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, var(--hornets-teal) 0%, #005A6A 100%);
+            color: var(--off-white);
             border: none;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
             text-transform: uppercase;
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        button:hover::before {
-            left: 100%;
+            box-shadow: 0 4px 0 #003D4D;
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 6px 0 var(--purple),
-                0 10px 30px rgba(255, 20, 147, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #003D4D;
         }
 
         button:active {
-            transform: translateY(-1px);
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #003D4D;
         }
 
-        .how-it-works {
-            text-align: left;
-            margin-top: 35px;
-            padding: 20px;
-            background: rgba(0, 206, 209, 0.1);
-            border-left: 4px solid var(--teal);
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
-        .how-it-works h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            color: var(--teal);
-            margin-bottom: 15px;
-            letter-spacing: 3px;
-        }
-
-        .how-it-works ol {
-            color: #c9b8e0;
-            padding-left: 25px;
-            line-height: 2.2;
+        #success-msg {
+            display: none;
+            text-align: center;
+            padding: 16px;
+            background: rgba(0, 119, 139, 0.2);
+            border: 1px solid var(--hornets-teal);
+            border-radius: 4px;
+            color: var(--hornets-teal);
+            font-family: 'Oswald', sans-serif;
             font-size: 14px;
-        }
-
-        .how-it-works li::marker {
-            color: var(--yellow);
-            font-weight: bold;
-        }
-
-        .recent-games {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 2px dashed var(--purple);
-            text-align: left;
-        }
-
-        .recent-games h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            color: var(--hot-pink);
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-
-        .game-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            font-size: 13px;
-            color: #a090b8;
-            border-bottom: 1px solid rgba(107, 45, 155, 0.3);
-        }
-
-        .game-item:last-child {
-            border-bottom: none;
-        }
-
-        .game-item .player {
-            color: #c9b8e0;
-        }
-
-        .game-item .points {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            color: var(--yellow);
-            text-shadow: 2px 2px 0 var(--orange);
-        }
-
-        .info {
-            margin-top: 30px;
-            color: #6a5a7a;
-            font-size: 11px;
             letter-spacing: 1px;
         }
 
+        /* Stats Section - Trading Card Back Style */
+        .stats-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 119, 139, 0.3);
+        }
+
+        .stats-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stats-header::before,
+        .stats-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--hornets-teal), transparent);
+        }
+
+        .stats-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            color: var(--gold-foil);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Game Cards */
+        .game-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--hornets-teal);
+        }
+
+        .game-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .player-name {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--off-white);
+            letter-spacing: 0.5px;
+        }
+
+        .game-details {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+
+        .points-badge {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--gold-foil);
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(0, 119, 139, 0.1);
+            border-radius: 4px;
+        }
+
+        .how-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            color: var(--hornets-teal);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .how-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .how-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--silver);
+            font-size: 13px;
+            padding: 6px 0;
+        }
+
+        .step-num {
+            width: 20px;
+            height: 20px;
+            background: var(--hornets-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            color: var(--off-white);
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 119, 139, 0.2);
+        }
+
+        .footer-text {
+            font-size: 10px;
+            color: #555;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         /* Responsive */
-        @media (max-width: 500px) {
-            .container {
-                padding: 35px 25px;
-                margin: 10px;
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 24px 20px;
             }
 
             h1 {
                 font-size: 38px;
             }
 
-            .tagline {
-                font-size: 8px;
-            }
-
-            .basketball {
-                font-size: 60px;
-            }
-
-            .container::before {
-                border-left-width: 30px;
-                border-bottom-width: 30px;
-            }
-
-            .container::after {
-                border-right-width: 30px;
-                border-top-width: 30px;
+            .deal-percent {
+                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Stars -->
-    <div class="stars" id="stars"></div>
+    <div class="card">
+        <div class="card-inner">
+            <div class="pinstripes"></div>
+            <div class="content">
+                <!-- Header -->
+                <div class="header">
+                    <div class="logo-badge">
+                        <span>DoorDash Promo Alert</span>
+                    </div>
+                    <h1>50<span class="title-accent">-</span>POINT</h1>
+                    <h1>ALERTS</h1>
+                    <p class="subtitle">Est. 2025</p>
+                </div>
 
-    <div class="container">
-        <div class="basketball">🏀</div>
-        <h1>50-POINT ALERTS</h1>
-        <p class="tagline">* * * Ballin' Since '95 * * *</p>
-        <p class="subtitle">
-            Get notified when DoorDash's <span class="highlight">50% OFF</span>
-            promo is live after an NBA player drops 50+ points
-        </p>
+                <!-- Deal Badge -->
+                <div class="deal-badge">
+                    <div class="deal-content">
+                        <div class="deal-percent">50% OFF</div>
+                        <div class="deal-text">When a player drops 50+</div>
+                    </div>
+                </div>
 
-        <!-- Signup Form - Handled via JavaScript -->
-        <form id="signup-form">
-            <input
-                type="email"
-                name="email"
-                id="email-input"
-                placeholder="DROP YOUR EMAIL HERE..."
-                required
-                autocomplete="email"
-            >
-            <button type="submit" id="submit-btn">JOIN THE SQUAD</button>
-        </form>
-        <div id="success-msg" style="display:none; margin-top: 15px; padding: 15px; background: rgba(0, 206, 209, 0.2); border-left: 4px solid #00CED1; color: #00CED1;">
-            YOU'RE IN! We'll alert you at 9 AM PT when the deal drops.
-        </div>
+                <!-- Description -->
+                <p class="description">
+                    Get notified at <strong>9 AM PT</strong> when DoorDash's 50% off promo is live —
+                    triggered every time an NBA player scores 50+ points.
+                </p>
 
-        <div class="how-it-works">
-            <h3>THE GAME PLAN</h3>
-            <ol>
-                <li>NBA player drops 50+ points</li>
-                <li>DoorDash runs 50% off (9-11 AM PT)</li>
-                <li>You get alerted at 9 AM sharp</li>
-            </ol>
-        </div>
+                <!-- Form -->
+                <div class="form-section">
+                    <form id="signup-form">
+                        <label class="form-label">Enter Your Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email-input"
+                            placeholder="your@email.com"
+                            required
+                            autocomplete="email"
+                        >
+                        <button type="submit" id="submit-btn">Get Alerts</button>
+                    </form>
+                    <div id="success-msg">
+                        You're in! We'll alert you at 9 AM PT when the deal drops.
+                    </div>
+                </div>
 
-        <div class="recent-games">
-            <h4>RECENT 50-POINT GAMES</h4>
-            <div class="game-item">
-                <span class="player">Jan 26, 2024 - Luka Doncic</span>
-                <span class="points">73 PTS</span>
+                <!-- Recent Games -->
+                <div class="stats-section">
+                    <div class="stats-header">
+                        <span class="stats-title">Recent 50+ Games</span>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-info">
+                            <span class="player-name">Anthony Edwards</span>
+                            <span class="game-details">Jan 17, 2026 • MIN @ SAS</span>
+                        </div>
+                        <span class="points-badge">55 PTS</span>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-info">
+                            <span class="player-name">Shai Gilgeous-Alexander</span>
+                            <span class="game-details">Oct 23, 2025 • OKC @ IND</span>
+                        </div>
+                        <span class="points-badge">55 PTS</span>
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="how-it-works">
+                    <div class="how-title">How It Works</div>
+                    <ul class="how-list">
+                        <li><span class="step-num">1</span> NBA player scores 50+ points</li>
+                        <li><span class="step-num">2</span> DoorDash runs 50% off (9-11 AM PT next day)</li>
+                        <li><span class="step-num">3</span> You get alerted at 9 AM sharp</li>
+                    </ul>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <p class="footer-text">Free Forever • Unsubscribe Anytime • No Spam</p>
+                </div>
             </div>
-            <div class="game-item">
-                <span class="player">Jan 26, 2024 - Devin Booker</span>
-                <span class="points">62 PTS</span>
-            </div>
-            <div class="game-item">
-                <span class="player">Dec 25, 2023 - Luka Doncic</span>
-                <span class="points">50 PTS</span>
-            </div>
         </div>
-
-        <p class="info">
-            FREE FOREVER // UNSUBSCRIBE ANYTIME // NO SPAM
-        </p>
     </div>
 
     <script>
-        // Generate floating stars
-        const starsContainer = document.getElementById('stars');
-        const starSymbols = ['★', '✦', '✧', '⋆'];
-
-        for (let i = 0; i < 20; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.textContent = starSymbols[Math.floor(Math.random() * starSymbols.length)];
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 2 + 's';
-            star.style.color = ['#FFD700', '#00CED1', '#FF1493', '#FF6B35'][Math.floor(Math.random() * 4)];
-            starsContainer.appendChild(star);
-        }
-
         // Form submission handler
         const WORKER_URL = 'https://fifty-point-signup.urielgre.workers.dev';
 
@@ -473,9 +599,8 @@
             const email = emailInput.value.trim();
             if (!email) return;
 
-            // Disable button and show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'JOINING...';
+            submitBtn.textContent = 'Joining...';
 
             try {
                 const response = await fetch(WORKER_URL, {
@@ -487,20 +612,18 @@
                 const result = await response.json();
 
                 if (response.ok || result.success) {
-                    // Success
                     form.style.display = 'none';
                     successMsg.style.display = 'block';
                 } else {
-                    // Error
                     alert(result.error || 'Something went wrong. Please try again.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'JOIN THE SQUAD';
+                    submitBtn.textContent = 'Get Alerts';
                 }
             } catch (error) {
                 console.error('Signup error:', error);
                 alert('Connection error. Please try again.');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'JOIN THE SQUAD';
+                submitBtn.textContent = 'Get Alerts';
             }
         });
     </script>
