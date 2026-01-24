@@ -675,7 +675,7 @@
                     </div>
 
                     <textarea class="feedback-textarea" id="feedback-message" placeholder="What's on your mind?"></textarea>
-                    <input type="email" class="feedback-email" id="feedback-email" placeholder="Your email (optional, for reply)">
+                    <input type="email" class="feedback-email" id="feedback-email" placeholder="Your email (required)" required>
                     <button class="feedback-submit" id="feedback-submit">Send Message</button>
                 </div>
                 <div class="feedback-success" id="feedback-success">
@@ -782,6 +782,11 @@
 
             if (!message) {
                 alert('Please enter a message');
+                return;
+            }
+
+            if (!email || !email.includes('@')) {
+                alert('Please enter your email address');
                 return;
             }
 

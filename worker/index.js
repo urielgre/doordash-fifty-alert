@@ -16,7 +16,10 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-const ADMIN_EMAIL = 'GVDEV1200@gmail.com';
+// Note: Resend free tier can only send to verified emails
+// Using the Resend account email, feedback forwarded to secondary
+const ADMIN_EMAIL = 'urielgsn@gmail.com';
+const FORWARD_EMAIL = 'GVDEV1200@gmail.com';
 
 export default {
   async fetch(request, env, ctx) {
@@ -133,6 +136,7 @@ async function handleFeedback(request, env) {
       body: JSON.stringify({
         from: '50-Point Alerts <onboarding@resend.dev>',
         to: ADMIN_EMAIL,
+        reply_to: email || undefined,
         subject: `[50-Point Alerts] New ${type || 'Feedback'}: ${message.slice(0, 50)}...`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -140,12 +144,13 @@ async function handleFeedback(request, env) {
             <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; font-size: 16px; line-height: 1.6;">${message.replace(/\n/g, '<br>')}</p>
             </div>
-            ${email ? `<p style="color: #666; font-size: 14px;"><strong>From:</strong> ${email}</p>` : '<p style="color: #999; font-size: 14px;">No email provided</p>'}
+            <p style="color: #666; font-size: 14px;"><strong>From:</strong> ${email}</p>
+            <p style="color: #999; font-size: 12px; margin-top: 16px;">Please forward to: ${FORWARD_EMAIL}</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="color: #999; font-size: 12px;">Sent from 50-Point Alerts feedback form</p>
           </div>
         `,
-        text: `New ${type || 'Feedback'}:\n\n${message}\n\nFrom: ${email || 'Not provided'}`,
+        text: `New ${type || 'Feedback'}:\n\n${message}\n\nFrom: ${email}\n\nPlease forward to: ${FORWARD_EMAIL}`,
       }),
     });
 
