@@ -123,7 +123,14 @@ def build_email_html(performances: list) -> str:
                                     <td style="padding: 24px; text-align: center;">
                                         <div style="font-size: 42px; font-weight: 800; color: #FF3008; letter-spacing: -1px;">50% OFF</div>
                                         <div style="color: #666; font-size: 14px; margin-top: 8px;">Valid until 11:00 AM PT today</div>
-                                        <div style="margin-top: 16px; padding: 10px 20px; background: #FF3008; color: white; border-radius: 6px; display: inline-block; font-weight: 600; font-size: 14px;">Use code: NBA50</div>
+                                        <table cellpadding="0" cellspacing="0" style="margin: 16px auto 0 auto;">
+                                            <tr>
+                                                <td style="background: #1F1F1F; padding: 12px 24px; border-radius: 6px; text-align: center;">
+                                                    <span style="color: #999; font-size: 12px;">USE CODE</span><br>
+                                                    <span style="color: white; font-size: 20px; font-weight: 800; letter-spacing: 2px;">NBA50</span>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </table>
@@ -136,31 +143,37 @@ def build_email_html(performances: list) -> str:
                             <h3 style="margin: 0 0 16px 0; font-size: 14px; font-weight: 700; color: #1F1F1F; text-transform: uppercase; letter-spacing: 0.5px;">How to Redeem</h3>
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td style="padding: 8px 0;">
+                                    <td style="padding: 10px 0;">
                                         <table cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">1</td>
-                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Open the DoorDash app</td>
+                                                <td width="32" height="32" style="background-color: #FF3008; border-radius: 16px; text-align: center; vertical-align: middle;">
+                                                    <span style="color: #ffffff; font-weight: 700; font-size: 14px; line-height: 32px;">1</span>
+                                                </td>
+                                                <td style="padding-left: 14px; color: #666; font-size: 15px;">Open the DoorDash app</td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 0;">
+                                    <td style="padding: 10px 0;">
                                         <table cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">2</td>
-                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Add items to your cart ($15+ subtotal)</td>
+                                                <td width="32" height="32" style="background-color: #FF3008; border-radius: 16px; text-align: center; vertical-align: middle;">
+                                                    <span style="color: #ffffff; font-weight: 700; font-size: 14px; line-height: 32px;">2</span>
+                                                </td>
+                                                <td style="padding-left: 14px; color: #666; font-size: 15px;">Add items to your cart ($15+ subtotal)</td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px 0;">
+                                    <td style="padding: 10px 0;">
                                         <table cellpadding="0" cellspacing="0">
                                             <tr>
-                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">3</td>
-                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Apply code <strong>NBA50</strong> at checkout</td>
+                                                <td width="32" height="32" style="background-color: #FF3008; border-radius: 16px; text-align: center; vertical-align: middle;">
+                                                    <span style="color: #ffffff; font-weight: 700; font-size: 14px; line-height: 32px;">3</span>
+                                                </td>
+                                                <td style="padding-left: 14px; color: #666; font-size: 15px;">Apply code <strong style="color: #FF3008;">NBA50</strong> at checkout</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -179,6 +192,20 @@ def build_email_html(performances: list) -> str:
                         </td>
                     </tr>
 
+                    <!-- Share Button -->
+                    <tr>
+                        <td style="padding: 0 30px 30px 30px; text-align: center;">
+                            <p style="margin: 0 0 12px 0; color: #666; font-size: 13px;">Know someone who loves DoorDash deals?</p>
+                            <table cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                                <tr>
+                                    <td style="background: #FF3008; border-radius: 6px;">
+                                        <a href="https://urielgre.github.io/doordash-fifty-alert/" style="display: inline-block; padding: 12px 24px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Share with Friends</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
                     <!-- Footer -->
                     <tr>
                         <td style="background-color: #1F1F1F; padding: 24px 30px; text-align: center;">
@@ -186,7 +213,7 @@ def build_email_html(performances: list) -> str:
                                 You're receiving this because you signed up for 50-Point Alerts.
                             </p>
                             <p style="margin: 0; color: rgba(255,255,255,0.4); font-size: 11px;">
-                                <a href="{{{{RESEND_UNSUBSCRIBE_URL}}}}" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Unsubscribe</a>
+                                <a href="{{{{{{RESEND_UNSUBSCRIBE_URL}}}}}}" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Unsubscribe</a>
                                 &nbsp;&nbsp;·&nbsp;&nbsp;
                                 <a href="https://urielgre.github.io/doordash-fifty-alert/" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Manage Preferences</a>
                             </p>
@@ -238,8 +265,11 @@ LAST NIGHT'S 50+ GAMES:
 {stats}
 
 ---
+Share with friends: https://urielgre.github.io/doordash-fifty-alert/
+
+---
 You're receiving this because you signed up for 50-Point Alerts.
-Unsubscribe: {{{{RESEND_UNSUBSCRIBE_URL}}}}
+Unsubscribe: {{{{{{RESEND_UNSUBSCRIBE_URL}}}}}}
 
 Not affiliated with DoorDash, Inc. or the NBA.
     """
