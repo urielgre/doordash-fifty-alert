@@ -4,7 +4,7 @@ Runs daily at 9:00 AM PT via GitHub Actions.
 
 Usage:
     python send_email.py              # Send alert if needed (reads state file)
-    python send_email.py --test       # Send test email to yourself
+    python send_email.py --test EMAIL # Send test email to specified address
     python send_email.py --preview    # Preview email HTML without sending
 """
 
@@ -31,7 +31,6 @@ def safe_print(text: str):
     try:
         print(text)
     except UnicodeEncodeError:
-        # Normalize Unicode and replace problematic characters
         normalized = unicodedata.normalize('NFKD', text)
         ascii_text = normalized.encode('ascii', 'replace').decode('ascii')
         print(ascii_text)
@@ -62,18 +61,36 @@ def get_subscribers() -> list:
 
 
 def build_email_html(performances: list) -> str:
-    """Build the alert email HTML with 90s NBA vibes."""
+    """Build the alert email HTML - clean DoorDash style."""
 
-    # Build player list
+    # Build player summary
     if len(performances) == 1:
         perf = performances[0]
-        player_text = f"<span style='color: #FFD700; font-weight: bold;'>{perf['player']}</span> dropped <span style='color: #FF1493; font-weight: bold;'>{perf['points']} POINTS</span> last night!"
+        player_summary = f"{perf['player']} dropped {perf['points']} points last night!"
     else:
-        players = " // ".join([
-            f"<span style='color: #FFD700;'>{p['player']}</span> ({p['points']})"
-            for p in performances
-        ])
-        player_text = f"Multiple ballers went off: {players}"
+        player_summary = f"{len(performances)} players scored 50+ last night!"
+
+    # Build player cards
+    player_cards = ""
+    for p in performances:
+        player_cards += f"""
+        <tr>
+            <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600; color: #1F1F1F; font-size: 15px;">{p['player']}</div>
+                            <div style="color: #999; font-size: 13px; margin-top: 2px;">{p['team']}</div>
+                        </td>
+                        <td align="right">
+                            <span style="font-size: 22px; font-weight: 800; color: #FF3008;">{p['points']}</span>
+                            <span style="color: #999; font-size: 12px;"> PTS</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        """
 
     return f"""
 <!DOCTYPE html>
@@ -81,115 +98,150 @@ def build_email_html(performances: list) -> str:
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>DoorDash 50% Off - Live Now!</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #2D1B4E;">
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: linear-gradient(180deg, #1a0a2e 0%, #2D1B4E 100%); border: 4px solid #00CED1; position: relative;">
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f7f7f7;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f7f7f7;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 500px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
 
-            <!-- Yellow Corner Triangle (top-left) -->
-            <div style="width: 0; height: 0; border-left: 40px solid #FFD700; border-bottom: 40px solid transparent; position: absolute; top: -4px; left: -4px;"></div>
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #FF3008 0%, #C41E00 100%); padding: 40px 30px; text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 12px;">🏀</div>
+                            <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">50% OFF IS LIVE!</h1>
+                            <p style="margin: 12px 0 0 0; color: rgba(255,255,255,0.9); font-size: 15px;">{player_summary}</p>
+                        </td>
+                    </tr>
 
-            <!-- Header -->
-            <div style="background: linear-gradient(135deg, #6B2D9B 0%, #2D1B4E 100%); padding: 30px; text-align: center; border-bottom: 3px solid #FF6B35;">
-                <div style="font-size: 60px; margin-bottom: 10px;">🏀</div>
-                <h1 style="font-family: 'Bebas Neue', Arial, sans-serif; color: #FFD700; margin: 0; font-size: 42px; letter-spacing: 4px; text-shadow: 3px 3px 0 #FF6B35;">50% OFF IS LIVE!</h1>
-                <p style="color: #00CED1; font-size: 12px; letter-spacing: 3px; margin-top: 8px;">★ ★ ★ BALLIN' SINCE '95 ★ ★ ★</p>
-            </div>
+                    <!-- Promo Box -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #FFF5F3; border-radius: 8px; border: 2px solid #FF3008;">
+                                <tr>
+                                    <td style="padding: 24px; text-align: center;">
+                                        <div style="font-size: 42px; font-weight: 800; color: #FF3008; letter-spacing: -1px;">50% OFF</div>
+                                        <div style="color: #666; font-size: 14px; margin-top: 8px;">Valid until 11:00 AM PT today</div>
+                                        <div style="margin-top: 16px; padding: 10px 20px; background: #FF3008; color: white; border-radius: 6px; display: inline-block; font-weight: 600; font-size: 14px;">Use code: NBA50</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-            <!-- Content -->
-            <div style="padding: 30px;">
-                <p style="font-size: 18px; color: #c9b8e0; line-height: 1.7; margin-top: 0;">
-                    {player_text}
-                </p>
+                    <!-- How to Redeem -->
+                    <tr>
+                        <td style="padding: 0 30px 30px 30px;">
+                            <h3 style="margin: 0 0 16px 0; font-size: 14px; font-weight: 700; color: #1F1F1F; text-transform: uppercase; letter-spacing: 0.5px;">How to Redeem</h3>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="padding: 8px 0;">
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">1</td>
+                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Open the DoorDash app</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0;">
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">2</td>
+                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Add items to your cart ($15+ subtotal)</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0;">
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="width: 28px; height: 28px; background: #FF3008; border-radius: 50%; text-align: center; color: white; font-weight: 700; font-size: 13px; line-height: 28px;">3</td>
+                                                <td style="padding-left: 12px; color: #666; font-size: 14px;">Apply code <strong>NBA50</strong> at checkout</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <!-- Promo Box -->
-                <div style="background: linear-gradient(90deg, #FF6B35 0%, #FF1493 100%); color: white; padding: 25px; text-align: center; margin: 25px 0; border-left: 5px solid #FFD700;">
-                    <div style="font-family: 'Bebas Neue', Arial, sans-serif; font-size: 48px; font-weight: bold; letter-spacing: 3px; text-shadow: 3px 3px 0 #6B2D9B;">50% OFF</div>
-                    <div style="font-size: 14px; letter-spacing: 2px; margin-top: 5px;">VALID UNTIL 11:00 AM PT TODAY</div>
-                </div>
+                    <!-- Last Night's Games -->
+                    <tr>
+                        <td style="padding: 0 30px 30px 30px;">
+                            <h3 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 700; color: #1F1F1F; text-transform: uppercase; letter-spacing: 0.5px;">Last Night's 50+ Games</h3>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                {player_cards}
+                            </table>
+                        </td>
+                    </tr>
 
-                <!-- How to use -->
-                <h3 style="font-family: 'Bebas Neue', Arial, sans-serif; color: #00CED1; margin-bottom: 15px; font-size: 20px; letter-spacing: 3px;">THE GAME PLAN:</h3>
-                <ol style="color: #c9b8e0; line-height: 2; padding-left: 20px; margin: 0;">
-                    <li>Open the <strong style="color: #FFD700;">DoorDash app</strong></li>
-                    <li>Look for the <strong style="color: #FFD700;">50% off banner</strong></li>
-                    <li>Order before <strong style="color: #FF1493;">11 AM PT</strong>!</li>
-                </ol>
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1F1F1F; padding: 24px 30px; text-align: center;">
+                            <p style="margin: 0 0 12px 0; color: rgba(255,255,255,0.6); font-size: 12px;">
+                                You're receiving this because you signed up for 50-Point Alerts.
+                            </p>
+                            <p style="margin: 0; color: rgba(255,255,255,0.4); font-size: 11px;">
+                                <a href="{{{{RESEND_UNSUBSCRIBE_URL}}}}" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Unsubscribe</a>
+                                &nbsp;&nbsp;·&nbsp;&nbsp;
+                                <a href="https://urielgre.github.io/doordash-fifty-alert/" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Manage Preferences</a>
+                            </p>
+                            <p style="margin: 16px 0 0 0; color: rgba(255,255,255,0.3); font-size: 10px;">
+                                Not affiliated with DoorDash, Inc. or the NBA.
+                            </p>
+                        </td>
+                    </tr>
 
-                <!-- Stats Box -->
-                <div style="background: rgba(0, 206, 209, 0.1); padding: 20px; margin-top: 25px; border-left: 4px solid #00CED1;">
-                    <h4 style="margin: 0 0 15px 0; color: #FF1493; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; font-family: 'Bebas Neue', Arial, sans-serif;">LAST NIGHT'S BIG PERFORMANCE</h4>
-                    {"".join([f'''
-                    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(107, 45, 155, 0.3);">
-                        <span style="color: #c9b8e0; font-weight: bold;">{p['player']} ({p['team']})</span>
-                        <span style="font-family: 'Bebas Neue', Arial, sans-serif; font-size: 22px; color: #FFD700; text-shadow: 2px 2px 0 #FF6B35;">{p['points']} PTS</span>
-                    </div>
-                    ''' for p in performances])}
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; text-align: center; border-top: 2px dashed #6B2D9B;">
-                <p style="color: #6a5a7a; font-size: 11px; margin: 0; letter-spacing: 1px;">
-                    FREE FOREVER // UNSUBSCRIBE ANYTIME // NO SPAM
-                    <br><br>
-                    <a href="{{{{RESEND_UNSUBSCRIBE_URL}}}}" style="color: #00CED1;">Unsubscribe</a>
-                </p>
-            </div>
-
-            <!-- Pink Corner Triangle (bottom-right) -->
-            <div style="width: 0; height: 0; border-right: 40px solid #FF1493; border-top: 40px solid transparent; position: absolute; bottom: -4px; right: -4px;"></div>
-
-        </div>
-    </div>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
     """
 
 
 def build_email_text(performances: list) -> str:
-    """Build plain text version of email with 90s vibes."""
+    """Build plain text version of email."""
 
     if len(performances) == 1:
         perf = performances[0]
-        player_text = f"{perf['player']} DROPPED {perf['points']} POINTS last night!"
+        player_text = f"{perf['player']} dropped {perf['points']} points last night!"
     else:
-        players = " // ".join([f"{p['player']} ({p['points']})" for p in performances])
-        player_text = f"Multiple ballers went off: {players}"
+        player_text = f"{len(performances)} players scored 50+ last night!"
 
     stats = "\n".join([
-        f"  * {p['player']} ({p['team']}): {p['points']} PTS"
+        f"  - {p['player']} ({p['team']}): {p['points']} PTS"
         for p in performances
     ])
 
     return f"""
-==================================
-  50-POINT ALERTS
-  * * * Ballin' Since '95 * * *
-==================================
+50-POINT ALERTS
+================
+
+🏀 50% OFF IS LIVE!
 
 {player_text}
 
-+--------------------------------+
-|                                |
-|          50% OFF               |
-|                                |
-|   Valid until 11:00 AM PT      |
-|                                |
-+--------------------------------+
-
-THE GAME PLAN:
+HOW TO REDEEM:
 1. Open the DoorDash app
-2. Look for the 50% off banner
-3. Order before 11 AM PT!
+2. Add items to your cart ($15+ subtotal)
+3. Apply code NBA50 at checkout
 
-Last Night's Performance:
+Valid until 11:00 AM PT today.
+
+LAST NIGHT'S 50+ GAMES:
 {stats}
 
 ---
 You're receiving this because you signed up for 50-Point Alerts.
 Unsubscribe: {{{{RESEND_UNSUBSCRIBE_URL}}}}
+
+Not affiliated with DoorDash, Inc. or the NBA.
     """
 
 
@@ -219,7 +271,6 @@ def send_alert(state: dict, test_email: str = None):
     text_content = build_email_text(performances)
 
     try:
-        # Send email
         response = resend.Emails.send({
             "from": EMAIL_FROM,
             "to": recipients,
@@ -255,13 +306,18 @@ def preview_email():
 
     if not state.get("performances"):
         # Use mock data for preview
-        state["performances"] = [{
-            "player": "Luka Doncic",
-            "team": "DAL",
-            "points": 73,
-            "rebounds": 10,
-            "assists": 7
-        }]
+        state["performances"] = [
+            {
+                "player": "Anthony Edwards",
+                "team": "MIN",
+                "points": 55,
+            },
+            {
+                "player": "Shai Gilgeous-Alexander",
+                "team": "OKC",
+                "points": 55,
+            }
+        ]
 
     html = build_email_html(state["performances"])
     text = build_email_text(state["performances"])
@@ -273,6 +329,7 @@ def preview_email():
 
     # Save HTML preview
     preview_path = Path(__file__).parent.parent / "data" / "email_preview.html"
+    preview_path.parent.mkdir(exist_ok=True)
     with open(preview_path, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\nHTML preview saved to: {preview_path}")
@@ -299,8 +356,6 @@ def main():
         print("\n❌ RESEND_API_KEY not set!")
         print("   Set it as an environment variable:")
         print("   export RESEND_API_KEY=re_xxxxx")
-        print("\n   Or create a .env file with:")
-        print("   RESEND_API_KEY=re_xxxxx")
         return
 
     # Load state
@@ -312,13 +367,18 @@ def main():
         print(f"\n[TEST MODE]")
         # Use mock data if no real performances
         if not state.get("performances"):
-            state["performances"] = [{
-                "player": "Luka Doncic",
-                "team": "DAL",
-                "points": 73,
-                "rebounds": 10,
-                "assists": 7
-            }]
+            state["performances"] = [
+                {
+                    "player": "Anthony Edwards",
+                    "team": "MIN",
+                    "points": 55,
+                },
+                {
+                    "player": "Shai Gilgeous-Alexander",
+                    "team": "OKC",
+                    "points": 55,
+                }
+            ]
         send_alert(state, test_email=args.test)
         return
 
