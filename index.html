@@ -311,6 +311,221 @@
             margin-bottom: 0;
         }
 
+        /* Feedback Button */
+        .feedback-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--doordash-red);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 48, 8, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 1000;
+        }
+
+        .feedback-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 48, 8, 0.5);
+        }
+
+        /* Feedback Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            max-width: 420px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--doordash-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-100);
+            color: var(--doordash-dark);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-description {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .feedback-type {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 500;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .type-btn.active {
+            background: #FFF0ED;
+            color: var(--doordash-red);
+            border-color: var(--doordash-red);
+        }
+
+        .type-btn:hover:not(.active) {
+            background: var(--gray-200);
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            outline: none;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.2s;
+        }
+
+        .feedback-textarea:focus {
+            border-color: var(--doordash-red);
+        }
+
+        .feedback-email {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            outline: none;
+            margin-top: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .feedback-email:focus {
+            border-color: var(--doordash-red);
+        }
+
+        .feedback-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 600;
+            background: var(--doordash-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background 0.2s;
+        }
+
+        .feedback-submit:hover {
+            background: #E62B00;
+        }
+
+        .feedback-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .feedback-success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feedback-success.active {
+            display: block;
+        }
+
+        .feedback-success-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-success-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--doordash-dark);
+            margin-bottom: 4px;
+        }
+
+        .feedback-success-subtext {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
@@ -437,6 +652,41 @@
         </div>
     </footer>
 
+    <!-- Feedback Button -->
+    <button class="feedback-btn" id="feedback-btn" title="Send Feedback">
+        💬
+    </button>
+
+    <!-- Feedback Modal -->
+    <div class="modal-overlay" id="feedback-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Send us a message</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="feedback-form-container">
+                    <p class="modal-description">Have a suggestion, question, or want to see a similar alert for something else? Let us know!</p>
+
+                    <div class="feedback-type">
+                        <button class="type-btn active" data-type="Suggestion">💡 Suggestion</button>
+                        <button class="type-btn" data-type="Question">❓ Question</button>
+                        <button class="type-btn" data-type="Other Idea">🚀 Other Idea</button>
+                    </div>
+
+                    <textarea class="feedback-textarea" id="feedback-message" placeholder="What's on your mind?"></textarea>
+                    <input type="email" class="feedback-email" id="feedback-email" placeholder="Your email (optional, for reply)">
+                    <button class="feedback-submit" id="feedback-submit">Send Message</button>
+                </div>
+                <div class="feedback-success" id="feedback-success">
+                    <div class="feedback-success-icon">✅</div>
+                    <div class="feedback-success-text">Thanks for your message!</div>
+                    <div class="feedback-success-subtext">We appreciate your feedback.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const WORKER_URL = 'https://fifty-point-signup.urielgre.workers.dev';
 
@@ -476,6 +726,103 @@
                 alert('Connection error. Please try again.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Sign Up — It\'s Free';
+            }
+        });
+
+        // Feedback Modal
+        const feedbackBtn = document.getElementById('feedback-btn');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const modalClose = document.getElementById('modal-close');
+        const feedbackSubmitBtn = document.getElementById('feedback-submit');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const feedbackEmail = document.getElementById('feedback-email');
+        const feedbackFormContainer = document.getElementById('feedback-form-container');
+        const feedbackSuccess = document.getElementById('feedback-success');
+        const typeButtons = document.querySelectorAll('.type-btn');
+
+        let selectedType = 'Suggestion';
+
+        // Open modal
+        feedbackBtn.addEventListener('click', () => {
+            feedbackModal.classList.add('active');
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', () => {
+            feedbackModal.classList.remove('active');
+        });
+
+        // Close on overlay click
+        feedbackModal.addEventListener('click', (e) => {
+            if (e.target === feedbackModal) {
+                feedbackModal.classList.remove('active');
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && feedbackModal.classList.contains('active')) {
+                feedbackModal.classList.remove('active');
+            }
+        });
+
+        // Type selection
+        typeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                typeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedType = btn.dataset.type;
+            });
+        });
+
+        // Submit feedback
+        feedbackSubmitBtn.addEventListener('click', async () => {
+            const message = feedbackMessage.value.trim();
+            const email = feedbackEmail.value.trim();
+
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+
+            feedbackSubmitBtn.disabled = true;
+            feedbackSubmitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch(WORKER_URL + '/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, email, type: selectedType })
+                });
+
+                const result = await response.json();
+
+                if (response.ok || result.success) {
+                    feedbackFormContainer.style.display = 'none';
+                    feedbackSuccess.classList.add('active');
+
+                    // Reset and close after delay
+                    setTimeout(() => {
+                        feedbackModal.classList.remove('active');
+                        setTimeout(() => {
+                            feedbackFormContainer.style.display = 'block';
+                            feedbackSuccess.classList.remove('active');
+                            feedbackMessage.value = '';
+                            feedbackEmail.value = '';
+                            feedbackSubmitBtn.disabled = false;
+                            feedbackSubmitBtn.textContent = 'Send Message';
+                        }, 300);
+                    }, 2000);
+                } else {
+                    alert(result.error || 'Something went wrong. Please try again.');
+                    feedbackSubmitBtn.disabled = false;
+                    feedbackSubmitBtn.textContent = 'Send Message';
+                }
+            } catch (error) {
+                console.error('Feedback error:', error);
+                alert('Connection error. Please try again.');
+                feedbackSubmitBtn.disabled = false;
+                feedbackSubmitBtn.textContent = 'Send Message';
             }
         });
     </script>
