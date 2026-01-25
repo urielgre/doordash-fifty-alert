@@ -213,7 +213,7 @@ def build_email_html(performances: list) -> str:
                                 You're receiving this because you signed up for 50-Point Alerts.
                             </p>
                             <p style="margin: 0; color: rgba(255,255,255,0.4); font-size: 11px;">
-                                <a href="{{{{{{RESEND_UNSUBSCRIBE_URL}}}}}}" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Unsubscribe</a>
+                                <a href="https://fifty-point-signup.urielgre.workers.dev/unsubscribe" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Unsubscribe</a>
                                 &nbsp;&nbsp;·&nbsp;&nbsp;
                                 <a href="https://urielgre.github.io/doordash-fifty-alert/" style="color: rgba(255,255,255,0.6); text-decoration: underline;">Manage Preferences</a>
                             </p>
@@ -269,7 +269,7 @@ Share with friends: https://urielgre.github.io/doordash-fifty-alert/
 
 ---
 You're receiving this because you signed up for 50-Point Alerts.
-Unsubscribe: {{{{{{RESEND_UNSUBSCRIBE_URL}}}}}}
+Unsubscribe: https://fifty-point-signup.urielgre.workers.dev/unsubscribe
 
 Not affiliated with DoorDash, Inc. or the NBA.
     """
@@ -293,6 +293,9 @@ def send_alert(state: dict, test_email: str = None):
     html_content = build_email_html(performances)
     text_content = build_email_text(performances)
 
+    # Unsubscribe URL for headers and email body
+    unsubscribe_url = "https://fifty-point-signup.urielgre.workers.dev/unsubscribe"
+
     if test_email:
         # Test mode: send regular email to single recipient
         print(f"[TEST MODE] Sending to: {test_email}")
@@ -303,6 +306,10 @@ def send_alert(state: dict, test_email: str = None):
                 "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
                 "html": html_content,
                 "text": text_content,
+                "headers": {
+                    "List-Unsubscribe": f"<{unsubscribe_url}>",
+                    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+                },
             })
             print(f"\n✅ Test email sent successfully!")
             print(f"   Email ID: {response.get('id', 'N/A')}")
