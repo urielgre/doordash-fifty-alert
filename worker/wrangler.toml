@@ -3,6 +3,10 @@ main = "index.js"
 compatibility_date = "2024-01-01"
 
 # Environment variables - set these in Cloudflare dashboard
-# or use `wrangler secret put RESEND_API_KEY`
+# or use `wrangler secret put <VAR_NAME>`
+#
+# Required:
 # RESEND_API_KEY = "re_xxx"
 # RESEND_AUDIENCE_ID = "xxx"
+# ADMIN_EMAIL = "your-admin@email.com"
+# FORWARD_EMAIL = "your-forward@email.com"

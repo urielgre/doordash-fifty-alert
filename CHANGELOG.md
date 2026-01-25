@@ -14,6 +14,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Security
 - `worker/index.js` - Added HTML escaping to prevent XSS in feedback emails
+- `worker/index.js` - Moved admin emails to environment variables
+- Removed `add_contacts.py` containing hardcoded subscriber emails
+- Scrubbed git history to remove all exposed email addresses
 
 ---
 

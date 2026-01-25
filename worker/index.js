@@ -31,10 +31,9 @@ function escapeHtml(text) {
   return text.replace(/[&<>"']/g, (char) => map[char]);
 }
 
-// Note: Resend free tier can only send to verified emails
-// Using the Resend account email, feedback forwarded to secondary
-const ADMIN_EMAIL = 'urielgsn@gmail.com';
-const FORWARD_EMAIL = 'GVDEV1200@gmail.com';
+// Admin emails loaded from environment variables (set in Cloudflare dashboard)
+// ADMIN_EMAIL - Primary admin email for receiving feedback
+// FORWARD_EMAIL - Secondary email to forward feedback to
 
 export default {
   async fetch(request, env, ctx) {
@@ -167,7 +166,7 @@ async function handleFeedback(request, env) {
       },
       body: JSON.stringify({
         from: '50-Point Alerts <onboarding@resend.dev>',
-        to: ADMIN_EMAIL,
+        to: env.ADMIN_EMAIL,
         reply_to: email || undefined,
         subject: `[50-Point Alerts] New ${type || 'Feedback'}: ${message.slice(0, 50)}...`,
         html: `
@@ -177,12 +176,12 @@ async function handleFeedback(request, env) {
               <p style="margin: 0; font-size: 16px; line-height: 1.6;">${escapeHtml(message).replace(/\n/g, '<br>')}</p>
             </div>
             <p style="color: #666; font-size: 14px;"><strong>From:</strong> ${escapeHtml(email || 'Anonymous')}</p>
-            <p style="color: #999; font-size: 12px; margin-top: 16px;">Please forward to: ${FORWARD_EMAIL}</p>
+            <p style="color: #999; font-size: 12px; margin-top: 16px;">Please forward to: ${env.FORWARD_EMAIL}</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="color: #999; font-size: 12px;">Sent from 50-Point Alerts feedback form</p>
           </div>
         `,
-        text: `New ${type || 'Feedback'}:\n\n${message}\n\nFrom: ${email}\n\nPlease forward to: ${FORWARD_EMAIL}`,
+        text: `New ${type || 'Feedback'}:\n\n${message}\n\nFrom: ${email}\n\nPlease forward to: ${env.FORWARD_EMAIL}`,
       }),
     });
 
