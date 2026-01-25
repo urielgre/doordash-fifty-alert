@@ -14,6 +14,11 @@ on:
         description: 'Test email address (sends test email regardless of state)'
         required: false
         type: string
+      add_contacts:
+        description: 'Run add_contacts.py to bulk import contacts'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,7 +41,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Add contacts (if requested)
+        if: ${{ inputs.add_contacts == true }}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+        run: python src/add_contacts.py
+
       - name: Send alert if needed
+        if: ${{ inputs.add_contacts != true }}
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
