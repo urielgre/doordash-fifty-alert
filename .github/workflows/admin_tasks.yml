@@ -1,0 +1,51 @@
+name: Admin Tasks
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task to run'
+        required: true
+        type: choice
+        options:
+          - add_contacts
+          - list_contacts
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run task
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+        run: |
+          if [ "${{ inputs.task }}" = "add_contacts" ]; then
+            python src/add_contacts.py
+          elif [ "${{ inputs.task }}" = "list_contacts" ]; then
+            python -c "
+import resend
+import os
+resend.api_key = os.environ['RESEND_API_KEY']
+audience_id = os.environ['RESEND_AUDIENCE_ID']
+contacts = resend.Contacts.list(audience_id=audience_id)
+print(f'Total contacts: {len(contacts[\"data\"])}')
+for c in contacts['data']:
+    status = 'unsubscribed' if c.get('unsubscribed') else 'subscribed'
+    print(f\"  {c['email']} ({status})\")
+"
+          fi
