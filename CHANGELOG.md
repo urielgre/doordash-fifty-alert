@@ -12,6 +12,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - `admin_tasks.yml` - Replaced fragile inline Python with dedicated script
 
+### Security
+- `worker/index.js` - Added HTML escaping to prevent XSS in feedback emails
+
 ---
 
 ## [1.5.1] - 2026-01-24

@@ -17,6 +17,20 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+/**
+ * Escape HTML special characters to prevent XSS
+ */
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  };
+  return text.replace(/[&<>"']/g, (char) => map[char]);
+}
+
 // Note: Resend free tier can only send to verified emails
 // Using the Resend account email, feedback forwarded to secondary
 const ADMIN_EMAIL = 'urielgsn@gmail.com';
@@ -158,11 +172,11 @@ async function handleFeedback(request, env) {
         subject: `[50-Point Alerts] New ${type || 'Feedback'}: ${message.slice(0, 50)}...`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #FF3008;">New ${type || 'Feedback'} Received</h2>
+            <h2 style="color: #FF3008;">New ${escapeHtml(type || 'Feedback')} Received</h2>
             <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; font-size: 16px; line-height: 1.6;">${message.replace(/\n/g, '<br>')}</p>
+              <p style="margin: 0; font-size: 16px; line-height: 1.6;">${escapeHtml(message).replace(/\n/g, '<br>')}</p>
             </div>
-            <p style="color: #666; font-size: 14px;"><strong>From:</strong> ${email}</p>
+            <p style="color: #666; font-size: 14px;"><strong>From:</strong> ${escapeHtml(email || 'Anonymous')}</p>
             <p style="color: #999; font-size: 12px; margin-top: 16px;">Please forward to: ${FORWARD_EMAIL}</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="color: #999; font-size: 12px;">Sent from 50-Point Alerts feedback form</p>
