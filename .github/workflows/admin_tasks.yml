@@ -38,15 +38,5 @@ jobs:
           if [ "${{ inputs.task }}" = "add_contacts" ]; then
             python src/add_contacts.py
           elif [ "${{ inputs.task }}" = "list_contacts" ]; then
-            python -c "
-import resend
-import os
-resend.api_key = os.environ['RESEND_API_KEY']
-audience_id = os.environ['RESEND_AUDIENCE_ID']
-contacts = resend.Contacts.list(audience_id=audience_id)
-print(f'Total contacts: {len(contacts[\"data\"])}')
-for c in contacts['data']:
-    status = 'unsubscribed' if c.get('unsubscribed') else 'subscribed'
-    print(f\"  {c['email']} ({status})\")
-"
+            python src/list_contacts.py
           fi
