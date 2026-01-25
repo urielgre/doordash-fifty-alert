@@ -247,6 +247,60 @@
             line-height: 1.4;
         }
 
+        /* Promo Details */
+        .promo-details {
+            text-align: center;
+        }
+
+        .promo-highlight {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFF0ED 0%, #FFE4DE 100%);
+            border-radius: 12px;
+        }
+
+        .promo-discount {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--doordash-red);
+            letter-spacing: -1px;
+        }
+
+        .promo-max {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .promo-requirements {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .promo-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        .promo-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .promo-item strong {
+            color: var(--doordash-dark);
+        }
+
         /* Recent Games */
         .game {
             display: flex;
@@ -611,7 +665,7 @@
                     <span class="step-num">2</span>
                     <div class="step-content">
                         <div class="step-title">Promo Goes Live</div>
-                        <div class="step-text">DoorDash activates the deal the next morning (9-11 AM PT)</div>
+                        <div class="step-text">DoorDash activates the deal the next day (9 AM – 11:59 PM PT)</div>
                     </div>
                 </div>
                 <div class="step">
@@ -619,6 +673,35 @@
                     <div class="step-content">
                         <div class="step-title">You Get Notified</div>
                         <div class="step-text">We email you at 9 AM PT sharp so you don't miss it</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promo Details -->
+        <div class="card">
+            <h2 class="card-title">The Deal</h2>
+            <div class="promo-details">
+                <div class="promo-highlight">
+                    <span class="promo-discount">50% OFF</span>
+                    <span class="promo-max">up to $10</span>
+                </div>
+                <div class="promo-requirements">
+                    <div class="promo-item">
+                        <span class="promo-icon">🎫</span>
+                        <span><strong>DashPass members only</strong> — active subscription required</span>
+                    </div>
+                    <div class="promo-item">
+                        <span class="promo-icon">🏷️</span>
+                        <span>Use code <strong>NBA50</strong> at checkout</span>
+                    </div>
+                    <div class="promo-item">
+                        <span class="promo-icon">⏰</span>
+                        <span>Valid <strong>9 AM – 11:59 PM PT</strong> the day after a 50+ point game</span>
+                    </div>
+                    <div class="promo-item">
+                        <span class="promo-icon">📝</span>
+                        <span>Applies to subtotal only (not fees, taxes, or tip)</span>
                     </div>
                 </div>
             </div>
