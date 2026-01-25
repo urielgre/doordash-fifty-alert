@@ -12,11 +12,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - `admin_tasks.yml` - Replaced fragile inline Python with dedicated script
 
+### Removed
+- Feedback feature from Cloudflare Worker (simplified to signup + unsubscribe only)
+
 ### Security
-- `worker/index.js` - Added HTML escaping to prevent XSS in feedback emails
-- `worker/index.js` - Moved admin emails to environment variables
 - Removed `add_contacts.py` containing hardcoded subscriber emails
 - Scrubbed git history to remove all exposed email addresses
+- No admin emails exposed anywhere in codebase
 
 ---
 
