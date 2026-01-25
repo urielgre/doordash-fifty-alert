@@ -6,19 +6,36 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+_No unreleased changes._
+
+---
+
+## [1.7.0] - 2026-01-25
+
 ### Added
-- `src/list_contacts.py` - Dedicated script for listing contacts (replaces inline Python)
+- `src/list_contacts.py` - Dedicated script for listing contacts
+- "The Deal" section on landing page with full promo details:
+  - DashPass members only requirement
+  - 50% off up to $10
+  - NBA50 promo code
+  - 9 AM - 11:59 PM PT validity window
+  - Subtotal-only disclaimer
+
+### Changed
+- Landing page "How It Works" now shows correct promo window (9 AM - 11:59 PM PT)
+
+### Removed
+- Feedback feature entirely (worker + landing page popup)
+- `add_contacts.py` - contacts already imported, file contained exposed emails
 
 ### Fixed
 - `admin_tasks.yml` - Replaced fragile inline Python with dedicated script
 
-### Removed
-- Feedback feature from Cloudflare Worker (simplified to signup + unsubscribe only)
-
 ### Security
-- Removed `add_contacts.py` containing hardcoded subscriber emails
-- Scrubbed git history to remove all exposed email addresses
-- No admin emails exposed anywhere in codebase
+- **Git history scrubbed** - Removed 86 subscriber emails from all commits
+- **No emails exposed** - Only placeholder emails remain in codebase
+- Removed XSS-vulnerable feedback handler
+- Worker simplified to signup + unsubscribe only (2 env vars: RESEND_API_KEY, RESEND_AUDIENCE_ID)
 
 ---
 
@@ -34,12 +51,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - **Broadcasts API** - Uses Resend Broadcasts for production emails (automatic unsubscribe handling)
 - **Admin workflow** (`admin_tasks.yml`) - Manual workflow for contact management tasks
-- **Bulk contact import** - `add_contacts.py` with 0.6s rate limiting (86 contacts)
 - **List contacts task** - View all subscribers and their status
 
 ### Changed
 - Production emails now use Broadcasts API instead of individual sends
-- Added rate limiting to contact imports (max 2 requests/sec)
 
 ---
 
@@ -63,12 +78,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.3.0] - 2026-01-21
 
 ### Added
-- Feedback popup for user suggestions
 - Landing page images
 
 ### Changed
 - Clean professional redesign with DoorDash brand colors
-- 90s NBA aesthetic elements
 
 ---
 
@@ -78,7 +91,6 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Cloudflare Worker** for signup/unsubscribe handling
 - Signup endpoint: `POST /`
 - Unsubscribe endpoint: `GET/POST /unsubscribe`
-- Feedback handler: `POST /feedback`
 
 ---
 
@@ -86,7 +98,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - **NBA V3 Box Score API** - Updated from deprecated V2 endpoint
-- Unicode name handling (e.g., Dončić → Doncic)
+- Unicode name handling (e.g., Doncic)
 - Safe print for Windows console
 
 ---
@@ -108,6 +120,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 # Project Status Summary
 
+**Last Updated:** 2026-01-25
+
 ## Architecture
 
 ```
@@ -118,12 +132,13 @@ NBA API → check_fifty.py (1:30 AM PT) → alert_state.json → send_email.py (
 
 | Metric | Value |
 |--------|-------|
-| **Subscribers** | 86 contacts |
+| **Subscribers** | 86 contacts (in Resend) |
 | **Daily Schedule** | Check: 1:30 AM PT, Send: 9:00 AM PT |
 | **Email Service** | Resend (Broadcasts API) |
 | **Points Threshold** | 50+ points |
 | **Promo Code** | NBA50 |
-| **Promo Window** | 9 AM - 11 AM PT |
+| **Promo Window** | 9 AM - 11:59 PM PT (DashPass members only) |
+| **Max Discount** | 50% off, up to $10 |
 
 ## Files Overview
 
@@ -131,28 +146,37 @@ NBA API → check_fifty.py (1:30 AM PT) → alert_state.json → send_email.py (
 |------|---------|
 | `src/check_fifty.py` | NBA API score checker |
 | `src/send_email.py` | Email sender (Broadcasts) |
-| `src/add_contacts.py` | Bulk contact import |
+| `src/list_contacts.py` | List all subscribers |
 | `src/config.py` | Configuration settings |
 | `data/alert_state.json` | Inter-workflow state |
-| `.github/workflows/check_scores.yml` | Score check workflow |
-| `.github/workflows/send_alert.yml` | Email send workflow |
-| `.github/workflows/admin_tasks.yml` | Admin tasks workflow |
-| `worker/index.js` | Cloudflare Worker |
+| `.github/workflows/check_scores.yml` | Score check workflow (1:30 AM PT) |
+| `.github/workflows/send_alert.yml` | Email send workflow (9:00 AM PT) |
+| `.github/workflows/admin_tasks.yml` | Admin tasks (list_contacts) |
+| `worker/index.js` | Cloudflare Worker (signup + unsubscribe) |
 | `index.html` | Landing page |
 
-## Required Secrets (GitHub)
+## Required Secrets
 
+### GitHub Actions
 ```
 RESEND_API_KEY       - Resend API key
 RESEND_AUDIENCE_ID   - Resend Audience UUID
 EMAIL_FROM           - Sender email address
 ```
 
+### Cloudflare Worker
+```
+RESEND_API_KEY       - Resend API key
+RESEND_AUDIENCE_ID   - Resend Audience UUID
+```
+
 ## Key URLs
 
-- **Landing Page**: https://urielgre.github.io/doordash-fifty-alert/
-- **Signup Worker**: https://fifty-point-signup.urielgre.workers.dev/
-- **Unsubscribe**: https://fifty-point-signup.urielgre.workers.dev/unsubscribe
+| URL | Purpose |
+|-----|---------|
+| https://urielgre.github.io/doordash-fifty-alert/ | Landing page |
+| https://fifty-point-signup.urielgre.workers.dev/ | Signup API (POST) |
+| https://fifty-point-signup.urielgre.workers.dev/unsubscribe | Unsubscribe page |
 
 ## Testing
 
@@ -165,8 +189,20 @@ python src/send_email.py --preview
 
 # Send test email
 python src/send_email.py --test your@email.com
+
+# List all contacts (requires env vars)
+python src/list_contacts.py
 ```
 
-## Known Issues
+## Workflow Status
 
-- `admin_tasks.yml` may have shell quoting issues with inline Python code (investigating)
+Both workflows running successfully as of 2026-01-25:
+- **check_scores.yml** - Runs daily at 1:30 AM PT
+- **send_alert.yml** - Runs daily at 9:00 AM PT (only sends if alert_needed=true)
+
+## Security Notes
+
+- No real emails in codebase (git history scrubbed)
+- All secrets via environment variables
+- Worker only needs 2 env vars (no admin emails)
+- XSS vulnerability removed (feedback feature deleted)
