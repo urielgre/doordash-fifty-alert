@@ -279,6 +279,9 @@ def send_alert(state: dict, test_email: str = None):
     """
     Send alert email to all subscribers (or test email).
 
+    Uses Resend Broadcasts for production (automatic unsubscribe links).
+    Uses regular email for test mode.
+
     Args:
         state: Alert state dict with performances
         test_email: If provided, only send to this email
@@ -287,35 +290,49 @@ def send_alert(state: dict, test_email: str = None):
     resend.api_key = RESEND_API_KEY
 
     performances = state.get("performances", [])
-
-    if test_email:
-        recipients = [test_email]
-        print(f"[TEST MODE] Sending to: {test_email}")
-    else:
-        recipients = get_subscribers()
-        if not recipients:
-            print("No subscribers to notify")
-            return
-
     html_content = build_email_html(performances)
     text_content = build_email_text(performances)
 
-    try:
-        response = resend.Emails.send({
-            "from": EMAIL_FROM,
-            "to": recipients,
-            "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
-            "html": html_content,
-            "text": text_content,
-        })
+    if test_email:
+        # Test mode: send regular email to single recipient
+        print(f"[TEST MODE] Sending to: {test_email}")
+        try:
+            response = resend.Emails.send({
+                "from": EMAIL_FROM,
+                "to": [test_email],
+                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
+                "html": html_content,
+                "text": text_content,
+            })
+            print(f"\n✅ Test email sent successfully!")
+            print(f"   Email ID: {response.get('id', 'N/A')}")
+        except Exception as e:
+            print(f"\n❌ Error sending test email: {e}")
+            raise
+    else:
+        # Production mode: use Broadcasts for automatic unsubscribe handling
+        try:
+            # Create broadcast
+            broadcast = resend.Broadcasts.create({
+                "audience_id": RESEND_AUDIENCE_ID,
+                "from": EMAIL_FROM,
+                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
+                "html": html_content,
+                "text": text_content,
+                "name": f"50-Point Alert - {datetime.now().strftime('%Y-%m-%d')}",
+            })
+            broadcast_id = broadcast.get("id")
+            print(f"Broadcast created: {broadcast_id}")
 
-        print(f"\n✅ Email sent successfully!")
-        print(f"   Recipients: {len(recipients)}")
-        print(f"   Email ID: {response.get('id', 'N/A')}")
+            # Send immediately
+            resend.Broadcasts.send({"broadcast_id": broadcast_id})
 
-    except Exception as e:
-        print(f"\n❌ Error sending email: {e}")
-        raise
+            print(f"\n✅ Broadcast sent successfully!")
+            print(f"   Broadcast ID: {broadcast_id}")
+
+        except Exception as e:
+            print(f"\n❌ Error sending broadcast: {e}")
+            raise
 
 
 def clear_alert_state():
