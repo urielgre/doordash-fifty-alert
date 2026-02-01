@@ -26,4 +26,4 @@ POINTS_THRESHOLD = 50  # Minimum points for alert
 
 # Promo window (Pacific Time)
 PROMO_START = "9:00 AM PT"
-PROMO_END = "11:00 AM PT"
+PROMO_END = "11:59 PM PT"

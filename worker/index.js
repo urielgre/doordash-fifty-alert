@@ -38,8 +38,15 @@ export default {
           headers: { ...CORS_HEADERS, 'Content-Type': 'text/html' },
         });
       } else if (request.method === 'POST') {
-        const body = await request.json();
-        return handleUnsubscribe(body.email, env);
+        try {
+          const body = await request.json();
+          return handleUnsubscribe(body.email, env);
+        } catch (e) {
+          return new Response(JSON.stringify({ error: 'Invalid request body' }), {
+            status: 400,
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
+          });
+        }
       }
     }
 
@@ -114,8 +121,10 @@ async function handleSignup(request, env) {
 
   } catch (error) {
     console.error('Error:', error);
-    return new Response(JSON.stringify({ error: 'Server error' }), {
-      status: 500,
+    // Return 400 for JSON parse errors, 500 for other errors
+    const isParseError = error instanceof SyntaxError;
+    return new Response(JSON.stringify({ error: isParseError ? 'Invalid request body' : 'Server error' }), {
+      status: isParseError ? 400 : 500,
       headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
     });
   }

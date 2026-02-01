@@ -122,7 +122,7 @@ def build_email_html(performances: list) -> str:
                                 <tr>
                                     <td style="padding: 24px; text-align: center;">
                                         <div style="font-size: 42px; font-weight: 800; color: #FF3008; letter-spacing: -1px;">50% OFF</div>
-                                        <div style="color: #666; font-size: 14px; margin-top: 8px;">Valid until 11:00 AM PT today</div>
+                                        <div style="color: #666; font-size: 14px; margin-top: 8px;">Valid until 11:59 PM PT today</div>
                                         <table cellpadding="0" cellspacing="0" style="margin: 16px auto 0 auto;">
                                             <tr>
                                                 <td style="background: #1F1F1F; padding: 12px 24px; border-radius: 6px; text-align: center;">
@@ -259,7 +259,7 @@ HOW TO REDEEM:
 2. Add items to your cart ($15+ subtotal)
 3. Apply code NBA50 at checkout
 
-Valid until 11:00 AM PT today.
+Valid until 11:59 PM PT today.
 
 LAST NIGHT'S 50+ GAMES:
 {stats}
@@ -303,7 +303,7 @@ def send_alert(state: dict, test_email: str = None):
             response = resend.Emails.send({
                 "from": EMAIL_FROM,
                 "to": [test_email],
-                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
+                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11:59 PM PT!",
                 "html": html_content,
                 "text": text_content,
                 "headers": {
@@ -323,7 +323,7 @@ def send_alert(state: dict, test_email: str = None):
             broadcast = resend.Broadcasts.create({
                 "audience_id": RESEND_AUDIENCE_ID,
                 "from": EMAIL_FROM,
-                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11 AM PT!",
+                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11:59 PM PT!",
                 "html": html_content,
                 "text": text_content,
                 "name": f"50-Point Alert - {datetime.now().strftime('%Y-%m-%d')}",

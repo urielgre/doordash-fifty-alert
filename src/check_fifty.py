@@ -143,7 +143,7 @@ def save_alert_state(fifty_club: list, check_date: str):
         "checked_at": datetime.now().isoformat(),
         "promo_window": {
             "start": "9:00 AM PT",
-            "end": "11:00 AM PT"
+            "end": "11:59 PM PT"
         }
     }
 
