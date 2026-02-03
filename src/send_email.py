@@ -98,7 +98,7 @@ def build_email_html(performances: list) -> str:
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DoorDash 50% Off - Live Now!</title>
+    <title>DoorDash $5 Off - Live Now!</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f7f7f7;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f7f7f7;">
@@ -110,7 +110,7 @@ def build_email_html(performances: list) -> str:
                     <tr>
                         <td style="background: linear-gradient(135deg, #FF3008 0%, #C41E00 100%); padding: 40px 30px; text-align: center;">
                             <div style="font-size: 48px; margin-bottom: 12px;">🏀</div>
-                            <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">50% OFF IS LIVE!</h1>
+                            <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">$5 OFF IS LIVE!</h1>
                             <p style="margin: 12px 0 0 0; color: rgba(255,255,255,0.9); font-size: 15px;">{player_summary}</p>
                         </td>
                     </tr>
@@ -121,8 +121,8 @@ def build_email_html(performances: list) -> str:
                             <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #FFF5F3; border-radius: 8px; border: 2px solid #FF3008;">
                                 <tr>
                                     <td style="padding: 24px; text-align: center;">
-                                        <div style="font-size: 42px; font-weight: 800; color: #FF3008; letter-spacing: -1px;">50% OFF</div>
-                                        <div style="color: #666; font-size: 14px; margin-top: 8px;">Valid until 11:59 PM PT today</div>
+                                        <div style="font-size: 42px; font-weight: 800; color: #FF3008; letter-spacing: -1px;">$5 OFF</div>
+                                        <div style="color: #666; font-size: 14px; margin-top: 8px;">On $15+ orders · DashPass members · Delivery only</div>
                                         <table cellpadding="0" cellspacing="0" style="margin: 16px auto 0 auto;">
                                             <tr>
                                                 <td style="background: #1F1F1F; padding: 12px 24px; border-radius: 6px; text-align: center;">
@@ -161,7 +161,7 @@ def build_email_html(performances: list) -> str:
                                                 <td width="32" height="32" style="background-color: #FF3008; border-radius: 16px; text-align: center; vertical-align: middle;">
                                                     <span style="color: #ffffff; font-weight: 700; font-size: 14px; line-height: 32px;">2</span>
                                                 </td>
-                                                <td style="padding-left: 14px; color: #666; font-size: 15px;">Add items to your cart ($15+ subtotal)</td>
+                                                <td style="padding-left: 14px; color: #666; font-size: 15px;">Add items to your cart ($15+ subtotal, delivery only)</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -250,16 +250,16 @@ def build_email_text(performances: list) -> str:
 50-POINT ALERTS
 ================
 
-🏀 50% OFF IS LIVE!
+🏀 $5 OFF IS LIVE!
 
 {player_text}
 
 HOW TO REDEEM:
 1. Open the DoorDash app
-2. Add items to your cart ($15+ subtotal)
+2. Add items to your cart ($15+ subtotal, delivery only)
 3. Apply code NBA50 at checkout
 
-Valid until 11:59 PM PT today.
+DashPass members only · Valid until 11:59 PM PT today.
 
 LAST NIGHT'S 50+ GAMES:
 {stats}
@@ -303,7 +303,7 @@ def send_alert(state: dict, test_email: str = None):
             response = resend.Emails.send({
                 "from": EMAIL_FROM,
                 "to": [test_email],
-                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11:59 PM PT!",
+                "subject": "🏀 $5 OFF DoorDash - LIVE NOW until 11:59 PM PT!",
                 "html": html_content,
                 "text": text_content,
                 "headers": {
@@ -323,7 +323,7 @@ def send_alert(state: dict, test_email: str = None):
             broadcast = resend.Broadcasts.create({
                 "audience_id": RESEND_AUDIENCE_ID,
                 "from": EMAIL_FROM,
-                "subject": "🏀 50% OFF DoorDash - LIVE NOW until 11:59 PM PT!",
+                "subject": "🏀 $5 OFF DoorDash - LIVE NOW until 11:59 PM PT!",
                 "html": html_content,
                 "text": text_content,
                 "name": f"50-Point Alert - {datetime.now().strftime('%Y-%m-%d')}",

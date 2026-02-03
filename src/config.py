@@ -27,3 +27,10 @@ POINTS_THRESHOLD = 50  # Minimum points for alert
 # Promo window (Pacific Time)
 PROMO_START = "9:00 AM PT"
 PROMO_END = "11:59 PM PT"
+
+# Promo details (updated Feb 2026)
+PROMO_CODE = "NBA50"
+PROMO_DISCOUNT = "$5 off"
+PROMO_MIN_ORDER = "$15+"
+PROMO_REQUIREMENTS = "DashPass members, delivery only, 1 use per account"
+PROMO_SEASON_END = "April 12, 2026"
